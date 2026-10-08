@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link rel="icon" type="image/png" href="favicon gp-Photoroom.png">
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>General Padroni</title>
+
+    <style>
+
+        /* ============================================================
+           RESET
+        ============================================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            scroll-behavior: auto;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* ============================================================
+           SCROLLBAR — PRETA
+        ============================================================ */
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #242424;
+
+            border-radius: 10px;
+
+            border: 2px solid #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #353535;
+        }
+
+
+        /* Firefox */
+
+        html {
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                #242424
+                #0a0a0a;
+        }
+
+
+        /* ============================================================
+           ÁREA PRINCIPAL
+        ============================================================ */
+
+        .access-page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: #000;
+        }
+
+
+        /* ============================================================
+           SEQUÊNCIA DAS CINCO IMAGENS
+        ============================================================ */
+
+        .image-sequence {
+            position: relative;
+            width: 100%;
+            height: 400vh;
+        }
+
+
+        /* ============================================================
+           ÁREA FIXA DE VISUALIZAÇÃO
+        ============================================================ */
+
+        .image-stage {
+            position: sticky;
+            top: 0;
+
+            width: 100%;
+            height: 100vh;
+
+            min-height: 500px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(8, 124, 255, 0.06),
+                    transparent 48%
+                ),
+                #000;
+        }
+
+
+        /* ============================================================
+           CAMADAS DAS IMAGENS E PELÍCULAS
+        ============================================================ */
+
+        .image-layer {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            opacity: 0;
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        .image-layer::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            z-index: 2;
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           ENTRADA DA PRIMEIRA IMAGEM
+        ============================================================ */
+
+        .image-layer:first-child {
+            animation:
+                firstImageEntrance
+                0.8s
+                cubic-bezier(
+                    0.22,
+                    1,
+                    0.36,
+                    1
+                )
+                both;
+        }
+
+
+        @keyframes firstImageEntrance {
+
+            0% {
+                transform:
+                    translate3d(0, 70px, 0)
+                    scale(0.88);
+            }
+
+            60% {
+                transform:
+                    translate3d(0, -8px, 0)
+                    scale(1.015);
+            }
+
+            100% {
+                transform:
+                    translate3d(0, 0, 0)
+                    scale(1);
+            }
+        }
+
+
+        /* ============================================================
+           PELÍCULAS — CORES DAS ÁREAS
+        ============================================================ */
+
+        .image-layer.blue::after {
+            background: rgba(8, 124, 255, 0.14);
+        }
+
+
+        .image-layer.yellow::after {
+            background: rgba(255, 212, 0, 0.14);
+        }
+
+
+        .image-layer.green::after {
+            background: rgba(0, 208, 132, 0.14);
+        }
+
+
+        .image-layer.white::after {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+
+        .image-layer.black::after {
+            background: rgba(0, 0, 0, 0.22);
+        }
+
+
+        /* ============================================================
+           IMAGENS
+        ============================================================ */
+
+        .access-image {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center;
+
+            display: block;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transform:
+                translate3d(0, 0, 0)
+                scale(1);
+
+            transform-origin: center center;
+
+            will-change:
+                transform,
+                opacity;
+
+            user-select: none;
+            -webkit-user-drag: none;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.12s linear;
+        }
+
+
+        /* ============================================================
+           IMAGEM ATIVA
+        ============================================================ */
+
+        .access-image.active {
+            visibility: visible;
+            opacity: 1;
+
+            transform:
+                translate3d(0, 0, 0)
+                scale(1);
+        }
+
+
+        /* ============================================================
+           DIVISOR NEON ENTRE AS SEÇÕES
+        ============================================================ */
+
+        .section-divider {
+            position: relative;
+
+            width: 100%;
+            height: 2px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 0 4px
+                rgba(255, 255, 255, 0.95),
+
+                0 0 10px
+                rgba(255, 255, 255, 0.85),
+
+                0 0 22px
+                rgba(255, 255, 255, 0.65),
+
+                0 0 42px
+                rgba(255, 255, 255, 0.35);
+
+            z-index: 10;
+        }
+
+
+        /* ============================================================
+           ETAPA FINAL
+        ============================================================ */
+
+        .final-section {
+            position: relative;
+
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            padding:
+                80px
+                40px;
+
+            background:
+
+                /* ====================================================
+                   AZUIS
+                   ==================================================== */
+
+                radial-gradient(
+                    circle at 12% 18%,
+                    rgba(0, 72, 180, 0.32) 0%,
+                    rgba(0, 72, 180, 0.14) 18%,
+                    transparent 42%
+                ),
+
+                radial-gradient(
+                    circle at 42% 8%,
+                    rgba(8, 124, 255, 0.25) 0%,
+                    rgba(8, 124, 255, 0.10) 20%,
+                    transparent 40%
+                ),
+
+                radial-gradient(
+                    circle at 78% 35%,
+                    rgba(0, 190, 255, 0.18) 0%,
+                    rgba(0, 190, 255, 0.07) 18%,
+                    transparent 38%
+                ),
+
+                /* ====================================================
+                   AMARELOS
+                   ==================================================== */
+
+                radial-gradient(
+                    circle at 88% 12%,
+                    rgba(190, 145, 0, 0.26) 0%,
+                    rgba(190, 145, 0, 0.10) 18%,
+                    transparent 40%
+                ),
+
+                radial-gradient(
+                    circle at 72% 55%,
+                    rgba(255, 212, 0, 0.20) 0%,
+                    rgba(255, 212, 0, 0.07) 20%,
+                    transparent 40%
+                ),
+
+                radial-gradient(
+                    circle at 94% 78%,
+                    rgba(255, 170, 0, 0.16) 0%,
+                    rgba(255, 170, 0, 0.06) 18%,
+                    transparent 38%
+                ),
+
+                /* ====================================================
+                   VERDES
+                   ==================================================== */
+
+                radial-gradient(
+                    circle at 10% 82%,
+                    rgba(0, 105, 70, 0.28) 0%,
+                    rgba(0, 105, 70, 0.10) 20%,
+                    transparent 42%
+                ),
+
+                radial-gradient(
+                    circle at 35% 92%,
+                    rgba(0, 208, 132, 0.22) 0%,
+                    rgba(0, 208, 132, 0.07) 18%,
+                    transparent 40%
+                ),
+
+                radial-gradient(
+                    circle at 58% 76%,
+                    rgba(80, 255, 120, 0.14) 0%,
+                    rgba(80, 255, 120, 0.05) 16%,
+                    transparent 35%
+                ),
+
+                /* ====================================================
+                   CENTRO
+                   ==================================================== */
+
+                radial-gradient(
+                    circle at center,
+                    rgba(255, 255, 255, 0.025),
+                    transparent 45%
+                ),
+
+                /* ====================================================
+                   BASE
+                   ==================================================== */
+
+                #000;
+        }
+
+
+        /* ============================================================
+           CAMADA DE PROFUNDIDADE DA SEÇÃO FINAL
+        ============================================================ */
+
+        .final-section::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 15% 25%,
+                    rgba(0, 0, 0, 0.55),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(0, 0, 0, 0.28),
+                    transparent 42%
+                ),
+
+                radial-gradient(
+                    circle at 85% 75%,
+                    rgba(0, 0, 0, 0.58),
+                    transparent 35%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           MOVIMENTO SUAVE DO GRADIENTE
+        ============================================================ */
+
+        @keyframes finalGradientMove {
+
+            0% {
+                background-position:
+                    0% 50%;
+            }
+
+            50% {
+                background-position:
+                    50% 50%;
+            }
+
+            100% {
+                background-position:
+                    100% 50%;
+            }
+        }
+
+
+        /* ============================================================
+           GRADE DOS QUATRO ACESSOS
+        ============================================================ */
+
+        .access-grid {
+            position: relative;
+            z-index: 2;
+
+            width: min(94vw, 1400px);
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+
+            gap: clamp(16px, 2vw, 32px);
+
+            margin: 0 auto;
+        }
+
+
+        /* ============================================================
+           ACESSO INDIVIDUAL
+        ============================================================ */
+
+        .access-card {
+            position: relative;
+
+            flex: 1 1 0;
+
+            width: 100%;
+            max-width: 300px;
+
+            min-width: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            color: #fff;
+
+            text-decoration: none;
+
+            opacity: 0;
+
+            transform:
+                translate3d(0, 50px, 0)
+                scale(0.86);
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+
+        /* ============================================================
+           ENTRADA INDIVIDUAL DOS ACESSOS
+        ============================================================ */
+
+        .final-section.visible .access-card {
+            opacity: 1;
+
+            transform:
+                translate3d(0, 0, 0)
+                scale(1);
+        }
+
+
+        .final-section.visible .access-card:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+
+        .final-section.visible .access-card:nth-child(2) {
+            transition-delay: 0.10s;
+        }
+
+
+        .final-section.visible .access-card:nth-child(3) {
+            transition-delay: 0.20s;
+        }
+
+
+        .final-section.visible .access-card:nth-child(4) {
+            transition-delay: 0.30s;
+        }
+
+
+        /* ============================================================
+           QUADRADO DE IMAGEM
+        ============================================================ */
+
+        .access-card-image {
+            position: relative;
+
+            width: 100%;
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.4);
+
+            border-radius: 6px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 124, 255, 0.15),
+                    rgba(0, 208, 132, 0.12),
+                    rgba(255, 212, 0, 0.10)
+                );
+
+            box-shadow:
+                0 0 0
+                rgba(8, 124, 255, 0);
+
+            transform:
+                translate3d(0, 0, 0)
+                scale(1);
+
+            transition:
+                transform 0.45s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                ),
+
+                border-color 0.4s ease,
+
+                box-shadow 0.5s ease,
+
+                background 0.4s ease;
+        }
+
+
+        /* ============================================================
+           IMAGEM DO ACESSO
+        ============================================================ */
+
+        .access-card-image img {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center;
+
+            display: block;
+
+            transform:
+                translate3d(0, 0, 0)
+                scale(1);
+
+            user-select: none;
+            -webkit-user-drag: none;
+
+            pointer-events: none;
+
+            transition:
+                transform 0.7s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                ),
+
+                filter 0.5s ease;
+        }
+
+
+        /* ============================================================
+           PELÍCULA DOS ACESSOS
+        ============================================================ */
+
+        .access-card-image::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 124, 255, 0.08),
+                    rgba(0, 208, 132, 0.06),
+                    rgba(255, 212, 0, 0.05)
+                );
+
+            opacity: 0.8;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.4s ease;
+        }
+
+
+        /* ============================================================
+           BRILHO INTERNO
+        ============================================================ */
+
+        .access-card-image::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -130%;
+
+            width: 75%;
+            height: 100%;
+
+            z-index: 3;
+
+            transform:
+                skewX(-25deg);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    rgba(255, 255, 255, 0.52),
+                    rgba(255, 255, 255, 0.05),
+                    transparent
+                );
+
+            transition:
+                left 0.8s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           HOVER DO QUADRADO
+        ============================================================ */
+
+        .access-card:hover .access-card-image,
+        .access-card:focus-visible .access-card-image {
+            transform:
+                translate3d(0, -6px, 0)
+                scale(1.025);
+
+            border-color:
+                rgba(255, 255, 255, 0.85);
+
+            box-shadow:
+                0 0 20px
+                rgba(8, 124, 255, 0.22),
+
+                0 0 35px
+                rgba(0, 208, 132, 0.14),
+
+                0 0 55px
+                rgba(255, 212, 0, 0.08);
+        }
+
+
+        .access-card:hover .access-card-image img,
+        .access-card:focus-visible .access-card-image img {
+            transform:
+                translate3d(0, 0, 0)
+                scale(1.045);
+
+            filter:
+                brightness(1.08);
+        }
+
+
+        .access-card:hover .access-card-image::after,
+        .access-card:focus-visible .access-card-image::after {
+            opacity: 1;
+        }
+
+
+        .access-card:hover .access-card-image::before,
+        .access-card:focus-visible .access-card-image::before {
+            left: 140%;
+        }
+
+
+        /* ============================================================
+           TÍTULO DO ACESSO
+        ============================================================ */
+
+        .access-card-title {
+            position: relative;
+
+            display: block;
+
+            margin-top: 14px;
+
+            max-width: 100%;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    11px,
+                    1.2vw,
+                    15px
+                );
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.18em;
+
+            line-height: 1.2;
+
+            text-align: center;
+
+            white-space: nowrap;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translate3d(0, -7px, 0);
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease,
+                transform 0.3s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+
+        /* ============================================================
+           APARIÇÃO DO TÍTULO
+        ============================================================ */
+
+        .access-card:hover .access-card-title,
+        .access-card:focus-visible .access-card-title {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translate3d(0, 0, 0);
+        }
+
+
+        /* ============================================================
+           CORES INDIVIDUAIS DOS ACESSOS
+        ============================================================ */
+
+        .access-card.programacao
+        .access-card-image {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 124, 255, 0.22),
+                    rgba(8, 124, 255, 0.08)
+                );
+        }
+
+
+        .access-card.administracao
+        .access-card-image {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 212, 0, 0.18),
+                    rgba(255, 170, 0, 0.08)
+                );
+        }
+
+
+        .access-card.identity
+        .access-card-image {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 208, 132, 0.20),
+                    rgba(0, 105, 70, 0.08)
+                );
+        }
+
+
+        .access-card.cursos
+        .access-card-image {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.16),
+                    rgba(8, 124, 255, 0.08)
+                );
+        }
+
+
+        /* ============================================================
+           FOCO DO TECLADO
+        ============================================================ */
+
+        .access-card:focus {
+            outline: none;
+        }
+
+
+        .access-card:focus-visible {
+            outline:
+                2px solid
+                rgba(255, 212, 0, 0.85);
+
+            outline-offset: 6px;
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE — TELAS GRANDES
+        ============================================================ */
+
+        @media (min-width: 1200px) {
+
+            .access-grid {
+                gap: 28px;
+            }
+
+            .access-card {
+                max-width: 300px;
+            }
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE — TABLETS / NOTEBOOKS MENORES
+        ============================================================ */
+
+        @media (max-width: 1000px) {
+
+            .final-section {
+                padding:
+                    70px
+                    24px;
+            }
+
+            .access-grid {
+                width: 100%;
+
+                gap:
+                    clamp(
+                        10px,
+                        1.8vw,
+                        20px
+                    );
+            }
+
+            .access-card-title {
+                font-size: 11px;
+
+                letter-spacing:
+                    0.12em;
+            }
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE — TABLETS
+        ============================================================ */
+
+        @media (max-width: 900px) {
+
+            .image-stage {
+                min-height: 450px;
+            }
+
+            .final-section {
+                min-height: 100svh;
+
+                padding:
+                    60px
+                    20px;
+            }
+
+            .access-grid {
+                gap: 12px;
+            }
+
+            .access-card {
+                max-width: none;
+            }
+
+            .access-card-title {
+                font-size: 10px;
+                letter-spacing: 0.10em;
+            }
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE — CELULARES
+        ============================================================ */
+
+        @media (max-width: 600px) {
+
+            .image-sequence {
+                height: 420vh;
+            }
+
+            .image-stage {
+                height: 100svh;
+                min-height: 480px;
+            }
+
+            .final-section {
+                min-height: 100svh;
+
+                padding:
+                    70px
+                    24px;
+            }
+
+            .access-grid {
+                width: min(88vw, 360px);
+
+                flex-direction: column;
+
+                align-items: center;
+
+                gap: 32px;
+            }
+
+            .access-card {
+                width: 100%;
+                max-width: 360px;
+
+                flex: none;
+            }
+
+            .access-card-title {
+                margin-top: 12px;
+
+                font-size: 12px;
+
+                letter-spacing:
+                    0.14em;
+            }
+        }
+
+
+        /* ============================================================
+           TELAS MUITO PEQUENAS
+        ============================================================ */
+
+        @media (max-width: 380px) {
+
+            .final-section {
+                padding:
+                    60px
+                    18px;
+            }
+
+            .access-grid {
+                width: 90vw;
+
+                gap: 28px;
+            }
+
+            .access-card-title {
+                font-size: 11px;
+
+                letter-spacing:
+                    0.11em;
+            }
+        }
+
+
+        /* ============================================================
+           REDUÇÃO DE MOVIMENTO
+        ============================================================ */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            .access-image,
+            .image-layer,
+            .access-card,
+            .access-card-image,
+            .access-card-image img,
+            .access-card-image::before,
+            .access-card-image::after,
+            .access-card-title,
+            .final-section {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <main class="access-page">
+
+        <!-- ========================================================
+             SEQUÊNCIA DAS CINCO IMAGENS
+        ========================================================= -->
+
+        <section
+            class="image-sequence"
+            id="imageSequence"
+        >
+
+            <div
+                class="image-stage"
+                id="imageStage"
+            >
+
+                <div class="image-layer blue">
+
+                    <img
+                        src="img/rolagem (1).png"
+                        alt=""
+                        class="access-image active"
+                        draggable="false"
+                    >
+
+                </div>
+
+
+                <div class="image-layer yellow">
+
+                    <img
+                        src="img/rolagem (2).png"
+                        alt=""
+                        class="access-image"
+                        draggable="false"
+                    >
+
+                </div>
+
+
+                <div class="image-layer green">
+
+                    <img
+                        src="img/rolagem (3).png"
+                        alt=""
+                        class="access-image"
+                        draggable="false"
+                    >
+
+                </div>
+
+
+                <div class="image-layer white">
+
+                    <img
+                        src="img/rolagem (4).png"
+                        alt=""
+                        class="access-image"
+                        draggable="false"
+                    >
+
+                </div>
+
+
+                <div class="image-layer black">
+
+                    <img
+                        src="img/Retratos Pixelados dos Quatro Animais.png"
+                        alt=""
+                        class="access-image"
+                        draggable="false"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================
+             DIVISOR NEON
+        ========================================================= -->
+
+        <div class="section-divider"></div>
+
+
+        <!-- ========================================================
+             SEÇÃO FINAL
+        ========================================================= -->
+
+        <section
+            class="final-section"
+            id="finalSection"
+        >
+
+            <div class="access-grid">
+
+                <!-- ==================================================
+                     PROGRAMAÇÃO
+                ================================================== -->
+
+                <a
+                    href="programation.html"
+                    class="access-card programacao"
+                    aria-label="Acessar Programação"
+                >
+
+                    <div class="access-card-image">
+
+                        <img
+                            src="img/programation.jpg"
+                            alt="Programação"
+                            draggable="false"
+                        >
+
+                    </div>
+
+                    <span class="access-card-title">
+                        PROGRAMAÇÃO
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================================
+                     ADMINISTRAÇÃO
+                ================================================== -->
+
+                <a
+                    href="administration.html"
+                    class="access-card administracao"
+                    aria-label="Acessar Administração"
+                >
+
+                    <div class="access-card-image">
+
+                        <img
+                            src="img/administration.jpg"
+                            alt="Administração"
+                            draggable="false"
+                        >
+
+                    </div>
+
+                    <span class="access-card-title">
+                        ADMINISTRAÇÃO
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================================
+                     IDENTITY CREATOR
+                ================================================== -->
+
+                <a
+                    href="identitycreator.html"
+                    class="access-card identity"
+                    aria-label="Acessar Identity Creator"
+                >
+
+                    <div class="access-card-image">
+
+                        <img
+                            src="img/identity.jpg"
+                            alt="Identity Creator"
+                            draggable="false"
+                        >
+
+                    </div>
+
+                    <span class="access-card-title">
+                        IDENTITY CREATOR
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================================
+                     CURSOS
+                ================================================== -->
+
+                <a
+                    href="courses.html"
+                    class="access-card cursos"
+                    aria-label="Acessar Cursos"
+                >
+
+                    <div class="access-card-image">
+
+                        <img
+                            src="img/courses.jpg"
+                            alt="Cursos"
+                            draggable="false"
+                        >
+
+                    </div>
+
+                    <span class="access-card-title">
+                        CURSOS
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+        /* ============================================================
+           ELEMENTOS
+        ============================================================ */
+
+        const sequence =
+            document.getElementById(
+                "imageSequence"
+            );
+
+        const images =
+            document.querySelectorAll(
+                ".access-image"
+            );
+
+        const imageLayers =
+            document.querySelectorAll(
+                ".image-layer"
+            );
+
+        const finalSection =
+            document.getElementById(
+                "finalSection"
+            );
+
+
+        /* ============================================================
+           CONTROLE DA SEQUÊNCIA
+        ============================================================ */
+
+        function updateSequence() {
+
+            if (
+                !sequence ||
+                !images.length
+            ) {
+                return;
+            }
+
+
+            const rect =
+                sequence.getBoundingClientRect();
+
+
+            const viewportHeight =
+                window.innerHeight;
+
+
+            const totalScrollable =
+                sequence.offsetHeight -
+                viewportHeight;
+
+
+            if (
+                totalScrollable <= 0
+            ) {
+                return;
+            }
+
+
+            const passed =
+                Math.min(
+                    Math.max(
+                        -rect.top,
+                        0
+                    ),
+                    totalScrollable
+                );
+
+
+            const progress =
+                passed /
+                totalScrollable;
+
+
+            const totalImages =
+                images.length;
+
+
+            /*
+             * Cada imagem recebe uma parte
+             * equivalente da rolagem.
+             */
+
+            const rawIndex =
+                progress *
+                totalImages;
+
+
+            let activeIndex =
+                Math.floor(
+                    rawIndex
+                );
+
+
+            if (
+                activeIndex >=
+                totalImages
+            ) {
+                activeIndex =
+                    totalImages - 1;
+            }
+
+
+            /* ========================================================
+               PROGRESSO INTERNO
+            ======================================================== */
+
+            let imageProgress =
+                rawIndex -
+                activeIndex;
+
+
+            imageProgress =
+                Math.min(
+                    Math.max(
+                        imageProgress,
+                        0
+                    ),
+                    1
+                );
+
+
+            /* ========================================================
+               IMAGENS
+            ======================================================== */
+
+            images.forEach(
+                (
+                    image,
+                    index
+                ) => {
+
+                    let opacity = 0;
+
+                    let scale = 1;
+
+                    const layer =
+                        imageLayers[index];
+
+
+                    /* =================================================
+                       IMAGEM ATUAL
+                    ================================================= */
+
+                    if (
+                        index ===
+                        activeIndex
+                    ) {
+
+                        /*
+                         * Zoom suave.
+                         */
+
+                        scale =
+                            1 +
+                            (
+                                imageProgress *
+                                0.24
+                            );
+
+
+                        /*
+                         * A imagem permanece
+                         * totalmente visível durante
+                         * quase toda a etapa.
+                         */
+
+                        if (
+                            index ===
+                            totalImages - 1
+                        ) {
+
+                            /*
+                             * A última imagem permanece visível
+                             * ao chegar na seção final.
+                             */
+
+                            opacity = 1;
+
+                        } else if (
+                            imageProgress <
+                            0.82
+                        ) {
+
+                            opacity = 1;
+
+                        } else {
+
+                            const fadeProgress =
+                                (
+                                    imageProgress -
+                                    0.82
+                                ) /
+                                0.18;
+
+                            opacity =
+                                1 -
+                                (
+                                    fadeProgress *
+                                    0.9
+                                );
+                        }
+
+
+                        image.style.visibility =
+                            "visible";
+
+                    }
+
+
+                    /* =================================================
+                       PRÓXIMA IMAGEM
+                    ================================================= */
+
+                    else if (
+                        index ===
+                        activeIndex + 1
+                    ) {
+
+                        /*
+                         * A próxima imagem começa
+                         * a aparecer apenas no
+                         * final do zoom atual.
+                         */
+
+                        if (
+                            imageProgress <
+                            0.82
+                        ) {
+
+                            opacity = 0;
+
+                            image.style.visibility =
+                                "hidden";
+
+                        } else {
+
+                            const fadeProgress =
+                                (
+                                    imageProgress -
+                                    0.82
+                                ) /
+                                0.18;
+
+
+                            opacity =
+                                Math.min(
+                                    fadeProgress,
+                                    1
+                                );
+
+
+                            /*
+                             * Pequeno zoom inicial
+                             * para evitar uma quebra
+                             * visual brusca.
+                             */
+
+                            scale =
+                                1.035 +
+                                (
+                                    fadeProgress *
+                                    0.015
+                                );
+
+
+                            image.style.visibility =
+                                "visible";
+                        }
+
+                    }
+
+
+                    /* =================================================
+                       DEMAIS IMAGENS
+                    ================================================= */
+
+                    else {
+
+                        opacity = 0;
+
+                        scale = 1;
+
+                        image.style.visibility =
+                            "hidden";
+                    }
+
+
+                    image.style.opacity =
+                        opacity;
+
+
+                    if (layer) {
+
+                        layer.style.opacity =
+                            opacity;
+
+                        layer.style.visibility =
+                            opacity > 0
+                                ? "visible"
+                                : "hidden";
+                    }
+
+
+                    image.style.transform =
+                        `translate3d(0, 0, 0) scale(${scale})`;
+                }
+            );
+        }
+
+
+        /* ============================================================
+           SEÇÃO FINAL
+        ============================================================ */
+
+        function updateFinalSection() {
+
+            if (!finalSection) {
+                return;
+            }
+
+
+            const rect =
+                finalSection.getBoundingClientRect();
+
+
+            const triggerPoint =
+                window.innerHeight *
+                0.75;
+
+
+            finalSection.classList.toggle(
+                "visible",
+                rect.top <
+                triggerPoint
+            );
+        }
+
+
+        /* ============================================================
+           SCROLL
+        ============================================================ */
+
+        let ticking = false;
+
+
+        function handleScroll() {
+
+            if (!ticking) {
+
+                window.requestAnimationFrame(
+                    () => {
+
+                        updateSequence();
+
+                        updateFinalSection();
+
+                        ticking = false;
+                    }
+                );
+
+                ticking = true;
+            }
+        }
+
+
+        /* ============================================================
+           EVENTOS
+        ============================================================ */
+
+        window.addEventListener(
+            "scroll",
+            handleScroll,
+            {
+                passive: true
+            }
+        );
+
+
+        window.addEventListener(
+            "resize",
+            updateSequence
+        );
+
+
+        /* ============================================================
+           ESTADO INICIAL
+        ============================================================ */
+
+        updateSequence();
+
+        updateFinalSection();
+
+    </script>
+
+</body>
+
+</html>

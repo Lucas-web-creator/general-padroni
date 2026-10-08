@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <link rel="icon" type="image/png" href="img/favicon i-Photoroom.png">
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>Identity Creator | Geral Padroni</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            background: #000;
+        }
+
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            background: #000;
+
+            color: #fff;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        .sector-page {
+            position: relative;
+
+            width: 100%;
+            min-height: 100vh;
+
+            overflow: hidden;
+
+            background: #000;
+        }
+
+
+        .welcome-screen {
+
+            position: relative;
+
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            isolation: isolate;
+
+            background: #000;
+        }
+
+
+        /* ============================================================
+           GRADIENTE — MATA / VERDE
+        ============================================================ */
+
+        .welcome-screen::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -25%;
+
+            z-index: -3;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 18%,
+                    rgba(0, 55, 35, 0.85),
+                    transparent 34%
+                ),
+
+                radial-gradient(
+                    circle at 82% 20%,
+                    rgba(0, 105, 70, 0.75),
+                    transparent 34%
+                ),
+
+                radial-gradient(
+                    circle at 75% 78%,
+                    rgba(0, 208, 132, 0.54),
+                    transparent 36%
+                ),
+
+                radial-gradient(
+                    circle at 18% 80%,
+                    rgba(0, 130, 80, 0.62),
+                    transparent 34%
+                ),
+
+                radial-gradient(
+                    circle at 48% 45%,
+                    rgba(35, 180, 100, 0.35),
+                    transparent 38%
+                ),
+
+                linear-gradient(
+                    125deg,
+                    #000000 0%,
+                    #00150d 10%,
+                    #00291b 20%,
+                    #00472c 30%,
+                    #00643f 40%,
+                    #008b58 50%,
+                    #00b86f 60%,
+                    #00d084 70%,
+                    #007a4d 82%,
+                    #003e29 92%,
+                    #000000 100%
+                );
+
+            transform:
+                scale(1.08);
+
+            animation:
+                forestFlow
+                12s
+                ease-in-out
+                infinite alternate;
+        }
+
+
+        @keyframes forestFlow {
+
+            0% {
+                transform:
+                    scale(1.08)
+                    translate3d(-2%, 1%, 0);
+            }
+
+            50% {
+                transform:
+                    scale(1.14)
+                    translate3d(2%, -2%, 0);
+            }
+
+            100% {
+                transform:
+                    scale(1.08)
+                    translate3d(-1%, 2%, 0);
+            }
+        }
+
+
+        .welcome-screen::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background:
+
+                repeating-linear-gradient(
+                    115deg,
+                    transparent 0,
+                    transparent 9%,
+                    rgba(90,255,170,0.035) 9.5%,
+                    transparent 10%
+                );
+
+            opacity: 0.65;
+
+            animation:
+                forestMovement
+                14s
+                ease-in-out
+                infinite alternate;
+        }
+
+
+        @keyframes forestMovement {
+
+            0% {
+                transform:
+                    translateX(-2%)
+                    scale(1.02);
+            }
+
+            100% {
+                transform:
+                    translateX(2%)
+                    scale(1.08);
+            }
+        }
+
+
+        .welcome-content {
+
+            width: min(900px, 88%);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding: 40px;
+
+            opacity: 0;
+
+            transform:
+                translateY(35px)
+                scale(0.96);
+
+            animation:
+                welcomeEnter
+                1.2s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                )
+                0.2s
+                forwards;
+        }
+
+
+        @keyframes welcomeEnter {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
+            }
+
+            100% {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        .welcome-title {
+
+            margin-bottom: 28px;
+
+            font-size:
+                clamp(
+                    3.5rem,
+                    10vw,
+                    8rem
+                );
+
+            font-weight: 900;
+
+            line-height: 0.9;
+
+            letter-spacing: -0.055em;
+
+            color: #fff;
+
+            text-shadow:
+                0 0 18px
+                rgba(0,208,132,0.50),
+
+                0 0 40px
+                rgba(0,180,110,0.28),
+
+                0 0 75px
+                rgba(0,120,80,0.18);
+        }
+
+
+        .welcome-line {
+
+            width: 120px;
+
+            height: 2px;
+
+            margin-bottom: 30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #00a866,
+                    #68ffc0,
+                    #00d084,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 12px #00d084,
+                0 0 30px rgba(0,208,132,0.55);
+        }
+
+
+        .welcome-message {
+
+            max-width: 760px;
+
+            margin-bottom: 42px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.84
+                );
+
+            font-size:
+                clamp(
+                    14px,
+                    1.5vw,
+                    18px
+                );
+
+            line-height: 1.8;
+        }
+
+
+        .welcome-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .welcome-button {
+
+            position: relative;
+
+            min-width: 175px;
+
+            height: 56px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 0 30px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.38);
+
+            border-radius: 4px;
+
+            color: #fff;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.25em;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,65,43,0.72),
+                    rgba(0,208,132,0.30),
+                    rgba(0,45,30,0.78)
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(0,208,132,0.13);
+
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease,
+                background 0.35s ease;
+        }
+
+
+        .welcome-button::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -130%;
+
+            width: 80%;
+            height: 100%;
+
+            transform:
+                skewX(-25deg);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.05),
+                    rgba(255,255,255,0.55),
+                    rgba(255,255,255,0.05),
+                    transparent
+                );
+
+            transition:
+                left 0.8s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+
+        .welcome-button span {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .welcome-button:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(255,255,255,0.88);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,110,72,0.82),
+                    rgba(0,208,132,0.54),
+                    rgba(0,70,45,0.84)
+                );
+
+            box-shadow:
+                0 0 20px
+                rgba(0,208,132,0.35),
+
+                0 0 42px
+                rgba(0,180,110,0.18),
+
+                0 0 70px
+                rgba(0,120,80,0.12);
+        }
+
+
+        .welcome-button:hover::before {
+            left: 140%;
+        }
+
+
+        .welcome-button:active {
+            transform:
+                translateY(-1px)
+                scale(0.97);
+        }
+
+
+        .welcome-button.back {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(10,10,10,0.82),
+                    rgba(35,35,35,0.65)
+                );
+        }
+
+
+        @media (max-width: 600px) {
+
+            .welcome-content {
+                width: 94%;
+                padding: 25px;
+            }
+
+
+            .welcome-title {
+                font-size:
+                    clamp(
+                        3rem,
+                        17vw,
+                        5rem
+                    );
+            }
+
+
+            .welcome-message {
+                font-size: 13px;
+                line-height: 1.7;
+                margin-bottom: 34px;
+            }
+
+
+            .welcome-actions {
+                width: 100%;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+
+            .welcome-button {
+                width: min(100%, 300px);
+            }
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="sector-page">
+
+        <section class="welcome-screen">
+
+            <div class="welcome-content">
+
+                <h1 class="welcome-title">
+                    BEM-VINDO
+                </h1>
+
+
+                <div class="welcome-line"></div>
+
+
+                <p class="welcome-message">
+
+                    Esta página não funciona como um portfólio
+                    completo. Ela foi desenvolvida como um centro
+                    de informações e acessos dedicado à área de
+                    Identity Creator. Aqui você encontrará conteúdos,
+                    projetos, conhecimentos e diferentes referências
+                    relacionadas ao desenvolvimento de identidades
+                    e às áreas criativas trabalhadas nesse campo.
+
+                </p>
+
+
+                <div class="welcome-actions">
+
+                    <a
+                        href="acesso.html"
+                        class="welcome-button back"
+                        aria-label="Voltar para a página de acessos"
+                    >
+                        <span>VOLTAR</span>
+                    </a>
+
+
+                    <a
+                        href="Iidentitycreator.html"
+                        class="welcome-button"
+                        aria-label="Avançar para Identity Creator"
+                    >
+                        <span>AVANÇAR</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

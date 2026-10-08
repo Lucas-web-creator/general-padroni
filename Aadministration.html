@@ -1,0 +1,7617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#332600"
+    >
+    <link rel="icon" type="image/png" href="img/favicon aad-Photoroom.png">
+
+    <title>Administração</title>
+
+
+    <style>
+
+        /* ============================================================
+           RESET
+        ============================================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+            overflow-x: hidden;
+
+            background: #000;
+
+            color: #fff;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        /* ============================================================
+           SCROLLBAR — AMARELA SUAVE
+        ============================================================ */
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0b0b08;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #b9a43a;
+
+            border-radius: 10px;
+
+            border: 2px solid #0b0b08;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d0bb4a;
+        }
+
+
+        /* Firefox */
+
+        html {
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                #b9a43a
+                #0b0b08;
+        }
+
+        /* ============================================================
+           INTRODUÇÃO
+        ============================================================ */
+
+        .intro-screen {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 48%,
+                    rgba(255, 212, 0, 0.35),
+                    transparent 24%
+                ),
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 170, 0, 0.25),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 80% 75%,
+                    rgba(255, 230, 80, 0.20),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #000,
+                    #211700,
+                    #4a3400,
+                    #806000,
+                    #c99700,
+                    #ffd400,
+                    #9d7200,
+                    #3c2b00,
+                    #000
+                );
+
+            background-size:
+                100% 100%,
+                140% 140%,
+                150% 150%,
+                500% 500%;
+
+            animation:
+                sunBackground
+                7s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes sunBackground {
+
+            0% {
+                background-position:
+                    50% 50%,
+                    0% 0%,
+                    100% 100%,
+                    0% 50%;
+            }
+
+            50% {
+                background-position:
+                    50% 48%,
+                    40% 30%,
+                    60% 70%,
+                    100% 50%;
+            }
+
+            100% {
+                background-position:
+                    50% 50%,
+                    0% 0%,
+                    100% 100%,
+                    0% 50%;
+            }
+        }
+
+
+        /* ============================================================
+           RAIOS
+        ============================================================ */
+
+        .sun-rays {
+            position: absolute;
+
+            inset: -50%;
+
+            background:
+                repeating-conic-gradient(
+                    from 0deg,
+                    rgba(255, 212, 0, 0.09) 0deg 10deg,
+                    transparent 10deg 24deg
+                );
+
+            animation:
+                raysRotate
+                12s
+                linear
+                infinite;
+        }
+
+
+        @keyframes raysRotate {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+
+        /* ============================================================
+           CONTEÚDO DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-content {
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        /* ============================================================
+           IMAGEM DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-image {
+            position: relative;
+
+            width: clamp(
+                180px,
+                27vw,
+                340px
+            );
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            border:
+                2px solid
+                rgba(255, 212, 0, 0.85);
+
+            border-radius: 28px;
+
+            background: #241900;
+
+            box-shadow:
+
+                0 0 20px
+                rgba(255, 212, 0, 0.60),
+
+                0 0 50px
+                rgba(255, 180, 0, 0.40),
+
+                0 0 100px
+                rgba(255, 130, 0, 0.18);
+
+            opacity: 0;
+
+            transform:
+                scale(0.65);
+
+            animation:
+                sunImageEntrance
+                1.1s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                )
+                0.15s
+                forwards;
+        }
+
+
+        @keyframes sunImageEntrance {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    scale(0.65)
+                    rotate(-4deg);
+            }
+
+            65% {
+                opacity: 1;
+
+                transform:
+                    scale(1.05)
+                    rotate(1deg);
+            }
+
+            100% {
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    rotate(0);
+            }
+        }
+
+
+        /* ============================================================
+           EFEITO DE LUZ DA IMAGEM DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-image::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -100%;
+
+            background:
+                conic-gradient(
+                    transparent,
+                    rgba(255, 212, 0, 0.55),
+                    transparent,
+                    rgba(255, 170, 0, 0.30),
+                    transparent
+                );
+
+            animation:
+                sunSpin
+                6s
+                linear
+                infinite;
+
+            z-index: 1;
+        }
+
+
+        @keyframes sunSpin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+
+        .intro-image::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    transparent 15%,
+                    rgba(255, 255, 255, 0.32),
+                    transparent 55%
+                );
+
+            transform:
+                translateX(-120%);
+
+            animation:
+                sunShine
+                2.2s
+                ease
+                1s
+                forwards;
+
+            z-index: 3;
+        }
+
+
+        @keyframes sunShine {
+
+            to {
+                transform:
+                    translateX(120%);
+            }
+        }
+
+
+        .intro-image img {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        /* ============================================================
+           TÍTULO DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-title {
+            margin-top: 30px;
+
+            font-size:
+                clamp(
+                    28px,
+                    5vw,
+                    64px
+                );
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.12em;
+
+            color: #fff;
+
+            text-transform: uppercase;
+
+            text-shadow:
+
+                0 0 15px
+                rgba(255, 212, 0, 0.75),
+
+                0 0 35px
+                rgba(255, 170, 0, 0.40);
+
+            opacity: 0;
+
+            transform:
+                translateY(20px);
+
+            animation:
+                titleEntrance
+                0.8s
+                ease
+                0.75s
+                forwards;
+        }
+
+
+        @keyframes titleEntrance {
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* ============================================================
+           SUBTÍTULO DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-subtitle {
+            margin-top: 12px;
+
+            font-size: 11px;
+
+            letter-spacing:
+                0.38em;
+
+            color:
+                rgba(
+                    255,
+                    225,
+                    120,
+                    0.78
+                );
+
+            text-transform: uppercase;
+
+            opacity: 0;
+
+            animation:
+                subtitleEntrance
+                0.8s
+                ease
+                1s
+                forwards;
+        }
+
+
+        @keyframes subtitleEntrance {
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        /* ============================================================
+           SAÍDA DA INTRODUÇÃO
+        ============================================================ */
+
+        .intro-screen.exit {
+            animation:
+                introExit
+                0.9s
+                cubic-bezier(
+                    0.65,
+                    0,
+                    0.35,
+                    1
+                )
+                forwards;
+        }
+
+
+        @keyframes introExit {
+
+            0% {
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+
+            100% {
+                opacity: 0;
+
+                transform:
+                    scale(1.08);
+
+                visibility: hidden;
+            }
+        }
+
+
+        /* ============================================================
+           PÁGINA PRINCIPAL
+        ============================================================ */
+
+
+        .main-page {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            display: none;
+
+            background: #000;
+
+            overflow: hidden;
+        }
+
+
+        .main-page.visible {
+            display: block;
+
+            animation:
+                pageReveal
+                0.9s
+                ease
+                forwards;
+        }
+
+
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+
+        .sector-hero {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            background: #000;
+
+            isolation: isolate;
+        }
+
+
+        /* ============================================================
+           IMAGEM DE FUNDO
+        ============================================================ */
+
+        .sector-hero-background {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -3;
+
+            overflow: hidden;
+        }
+
+
+        .sector-hero-background img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transform:
+                scale(1.10);
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+        }
+
+
+        /* ============================================================
+           ATMOSFERA AMARELA
+        ============================================================ */
+
+        .administracao-hero::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 45%,
+                    rgba(170, 120, 0, 0.60),
+                    transparent 40%
+                ),
+
+                radial-gradient(
+                    circle at 82% 30%,
+                    rgba(255, 212, 0, 0.30),
+                    transparent 38%
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.94),
+                    rgba(45, 30, 0, 0.62),
+                    rgba(0, 0, 0, 0.48)
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           OVERLAY
+           ÚNICA PELÍCULA ESCURA DA SEÇÃO
+        ============================================================ */
+
+        .sector-hero-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -1;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.82),
+                    rgba(0, 0, 0, 0.38),
+                    rgba(0, 0, 0, 0.72)
+                ),
+
+                linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.24),
+                    rgba(0, 0, 0, 0.68)
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           CONTAINER PRINCIPAL
+        ============================================================ */
+
+        .sector-hero-content {
+            position: relative;
+
+            z-index: 1;
+
+            width:
+                min(
+                    1400px,
+                    90%
+                );
+
+            min-height: 100vh;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(320px, 0.8fr);
+
+            align-items: center;
+
+            gap:
+                clamp(
+                140px,
+                        22vw,
+                        290px
+                );
+        }
+
+
+        /* ============================================================
+           TEXTO
+        ============================================================ */
+
+        .sector-hero-text {
+            position: relative;
+
+            z-index: 3;
+
+            max-width: 720px;
+
+            text-align: left;
+        }
+
+
+        /* ============================================================
+           LABEL
+        ============================================================ */
+
+        .sector-hero-label {
+            display: block;
+
+            margin-bottom: 18px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.55
+                );
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.42em;
+        }
+
+
+        /* ============================================================
+           TÍTULO PRINCIPAL
+           SEM GRADIENTE
+           SEM TRANSPARÊNCIA
+        ============================================================ */
+
+        .sector-hero-text h1 {
+            position: relative;
+
+            z-index: 5;
+
+            margin:
+                0 0 28px;
+
+            font-size:
+                clamp(
+                    2.8rem,
+                    5.3vw,
+                    5.8rem
+                );
+
+            font-weight: 900;
+
+            line-height: 0.92;
+
+            letter-spacing:
+                -0.055em;
+
+            text-transform: uppercase;
+
+            color: #ffffff;
+
+            -webkit-text-fill-color: #ffffff;
+
+            background: none;
+
+            -webkit-background-clip: initial;
+            background-clip: initial;
+
+            text-shadow:
+
+                0 0 12px
+                rgba(255, 212, 0, 0.75),
+
+                0 0 28px
+                rgba(255, 190, 0, 0.48),
+
+                0 0 65px
+                rgba(255, 170, 0, 0.28);
+        }
+
+
+        /* ============================================================
+           PARÁGRAFO
+        ============================================================ */
+
+        .sector-hero-text p {
+            position: relative;
+
+            z-index: 3;
+
+            max-width: 650px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.70
+                );
+
+            font-size:
+                clamp(
+                    15px,
+                    1.5vw,
+                    19px
+                );
+
+            line-height: 1.75;
+
+            font-weight: 400;
+        }
+
+
+        /* ============================================================
+           SÍMBOLO
+        ============================================================ */
+
+        .sector-hero-symbol {
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* ============================================================
+           ANEL PRINCIPAL
+        ============================================================ */
+
+        .sector-symbol-ring {
+            position: relative;
+
+            width:
+                clamp(
+                    230px,
+                    28vw,
+                    430px
+                );
+
+            aspect-ratio: 1;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.55
+                );
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(
+                        255,
+                        212,
+                        0,
+                        0.15
+                    ),
+                    rgba(
+                        120,
+                        85,
+                        0,
+                        0.08
+                    ) 45%,
+                    transparent 72%
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.30
+                ),
+
+                0 0 65px
+                rgba(
+                    255,
+                    190,
+                    0,
+                    0.16
+                ),
+
+                0 0 130px
+                rgba(
+                    255,
+                    170,
+                    0,
+                    0.09
+                );
+        }
+
+
+        /* ============================================================
+           PRIMEIRO ANEL INTERNO
+        ============================================================ */
+
+        .sector-symbol-ring::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 9%;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.30
+                );
+
+            box-shadow:
+                inset 0 0 25px
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.10
+                );
+        }
+
+
+        /* ============================================================
+           SEGUNDO ANEL INTERNO
+        ============================================================ */
+
+        .sector-symbol-ring::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 19%;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.20
+                );
+        }
+
+
+        /* ============================================================
+           NÚCLEO DA LOGO
+        ============================================================ */
+
+        .sector-symbol-core {
+            position: relative;
+
+            z-index: 2;
+
+            width: 42%;
+
+            aspect-ratio: 1;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #fff05a,
+                    #ffd400 40%,
+                    #b77e00 72%,
+                    #3d2800
+                );
+
+            border:
+                2px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.42
+                );
+
+            box-shadow:
+
+                0 0 18px
+                rgba(
+                    255,
+                    212,
+                    0,
+                    0.70
+                ),
+
+                0 0 45px
+                rgba(
+                    255,
+                    190,
+                    0,
+                    0.45
+                ),
+
+                0 0 85px
+                rgba(
+                    255,
+                    170,
+                    0,
+                    0.25
+                ),
+
+                0 0 120px
+                rgba(
+                    255,
+                    160,
+                    0,
+                    0.12
+                );
+        }
+
+
+        /* ============================================================
+           IMAGEM DA LOGO
+        ============================================================ */
+
+        .sector-symbol-core img {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+        }
+
+
+        /* ============================================================
+           BRILHO SOBRE A IMAGEM DA LOGO
+        ============================================================ */
+
+        .sector-symbol-core::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 3;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    125deg,
+                    transparent 20%,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.30
+                    ),
+                    transparent 55%
+                );
+
+            transform:
+                translateX(-120%);
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           TABLETS
+        ============================================================ */
+
+        @media (max-width: 900px) {
+
+            .sector-hero {
+                min-height: 100svh;
+            }
+
+
+            .sector-hero-content {
+                width:
+                    min(
+                        1400px,
+                        90%
+                    );
+
+                min-height: 100svh;
+
+                padding:
+                    100px
+                    0;
+
+                grid-template-columns: 1fr;
+
+                gap: 60px;
+
+                text-align: center;
+            }
+
+
+            .sector-hero-text {
+                max-width: 800px;
+
+                margin: 0 auto;
+
+                text-align: center;
+            }
+
+
+            .sector-hero-text p {
+                margin: 0 auto;
+            }
+
+
+            .sector-hero-symbol {
+                order: 2;
+            }
+
+
+            .sector-symbol-ring {
+                width:
+                    clamp(
+                        210px,
+                        45vw,
+                        320px
+                    );
+            }
+        }
+
+
+        /* ============================================================
+           CELULARES
+        ============================================================ */
+
+        @media (max-width: 480px) {
+
+            .sector-hero-content {
+                width: 88%;
+
+                padding:
+                    80px
+                    0;
+
+                gap: 90px;
+            }
+
+
+            .sector-hero-label {
+                font-size: 9px;
+
+                letter-spacing:
+                    0.30em;
+            }
+
+
+            .sector-hero-text h1 {
+                font-size:
+                    clamp(
+                        2.5rem,
+                        14vw,
+                        4.3rem
+                    );
+            }
+
+
+            .sector-hero-text p {
+                font-size: 14px;
+
+                line-height: 1.65;
+            }
+
+
+            .sector-symbol-ring {
+                width: 220px;
+            }
+
+
+            .sector-symbol-core {
+                width: 42%;
+            }
+        }
+
+
+        /* ============================================================
+           REDUÇÃO DE MOVIMENTO
+        ============================================================ */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+        /* ============================================================
+           DIVISÃO ENTRE AS SEÇÕES
+        ============================================================ */
+
+        .section-divider {
+            position: relative;
+            width: 100%;
+            height: 3px;
+
+            background: #786000;
+
+            box-shadow:
+                0 0 5px rgba(170, 135, 0, 0.85),
+                0 0 14px rgba(150, 115, 0, 0.75),
+                0 0 30px rgba(130, 100, 0, 0.50);
+
+            z-index: 10;
+        }
+
+        .section-divider::before {
+            content: "";
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 42%;
+            height: 1px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            background: rgba(255, 208, 0, 0.9);
+
+            box-shadow:
+                0 0 10px rgba(255, 208, 0, 0.9),
+                0 0 25px rgba(255, 208, 0, 0.55);
+        }
+
+
+        /* ============================================================
+           SEÇÃO DE TECNOLOGIAS
+        ============================================================ */
+
+        .programacao-technologies {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+
+            padding:
+                100px
+                5vw
+                120px;
+
+            background: #000;
+
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .programacao-technologies::before {
+            content: "";
+
+            position: absolute;
+
+            top: 8%;
+            left: 50%;
+
+            width: 700px;
+            height: 500px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                radial-gradient(
+                    ellipse,
+                    rgba(
+                        160,
+                        125,
+                        0,
+                        0.14
+                    ),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        /* ============================================================
+           CABEÇALHO DA SEÇÃO
+        ============================================================ */
+
+        .technologies-heading {
+            position: relative;
+
+            width: min(
+                1100px,
+                100%
+            );
+
+            margin:
+                0 auto 70px;
+
+            text-align: center;
+        }
+
+        .technologies-heading span {
+            display: block;
+
+            margin-bottom: 15px;
+
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.78
+                );
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing:
+                0.42em;
+
+            text-transform: uppercase;
+        }
+
+        .technologies-heading h2 {
+            margin-bottom: 18px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    2rem,
+                    4.2vw,
+                    4.5rem
+                );
+
+            font-weight: 900;
+
+            letter-spacing:
+                -0.045em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 18px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                );
+        }
+
+        .technologies-heading p {
+            max-width: 650px;
+
+            margin: 0 auto;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.56
+                );
+
+            font-size:
+                clamp(
+                    14px,
+                    1.3vw,
+                    17px
+                );
+
+            line-height: 1.7;
+        }
+
+
+        /* ============================================================
+           GRADE 3 × 3
+        ============================================================ */
+
+        .technologies-grid {
+            position: relative;
+
+            width: min(
+                1500px,
+                100%
+            );
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 32px;
+        }
+
+
+        /* ============================================================
+           CARD DA TECNOLOGIA
+        ============================================================ */
+
+        .tech-card {
+            position: relative;
+
+            min-width: 0;
+
+            aspect-ratio: 1 / 1;
+
+            padding: 14px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.28
+                );
+
+            border-radius: 24px;
+
+            background: #0b0902;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            isolation: isolate;
+
+            box-shadow:
+                0 0 15px
+                rgba(
+                    130,
+                    100,
+                    0,
+                    0.14
+                );
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease;
+        }
+
+        .tech-card::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            z-index: -1;
+
+            background:
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.38
+                    ),
+                    transparent 60%
+                );
+
+            transform:
+                translateY(105%);
+
+            transition:
+                transform
+                1s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+        .tech-card.revealed::before {
+            transform:
+                translateY(0);
+        }
+
+        .tech-card:hover {
+            transform:
+                translateY(-8px);
+
+            border-color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.82
+                );
+
+            box-shadow:
+
+                0 0 18px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.28
+                ),
+
+                0 0 42px
+                rgba(
+                    145,
+                    115,
+                    0,
+                    0.22
+                );
+        }
+
+
+        /* ============================================================
+           IMAGEM DA TECNOLOGIA
+        ============================================================ */
+
+        .tech-card-image {
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            border-radius: 17px;
+
+            background: #332800;
+
+            z-index: 2;
+        }
+
+        .tech-card-image img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+            transition:
+                transform
+                0.45s
+                ease;
+        }
+
+        .tech-card:hover
+        .tech-card-image img {
+            transform:
+                scale(1.045);
+        }
+
+        .tech-card-image::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent 45%,
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.72
+                    )
+                    100%
+                );
+
+            pointer-events: none;
+        }
+
+        .tech-card-info {
+            position: absolute;
+
+            left: 28px;
+            right: 28px;
+            bottom: 26px;
+
+            z-index: 4;
+
+            pointer-events: none;
+        }
+
+        .tech-card-number {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color:
+                rgba(
+                    255,
+                    225,
+                    100,
+                    0.72
+                );
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.25em;
+        }
+
+        .tech-card-info h3 {
+            color: #fff;
+
+            font-size:
+                clamp(
+                    1.3rem,
+                    2vw,
+                    2rem
+                );
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 2px 12px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.8
+                );
+        }
+
+        .tech-card-info small {
+            display: block;
+
+            margin-top: 5px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.70
+                );
+
+            font-size: 11px;
+
+            letter-spacing:
+                0.12em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* ============================================================
+           INDICADOR DE CLIQUE
+        ============================================================ */
+
+        .tech-card-click {
+            position: absolute;
+
+            top: 25px;
+            right: 25px;
+
+            z-index: 5;
+
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.32
+                );
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    45,
+                    35,
+                    0,
+                    0.55
+                );
+
+            color: #fff;
+
+            font-size: 15px;
+
+            backdrop-filter:
+                blur(6px);
+
+            transition:
+                background
+                0.3s
+                ease,
+
+                border-color
+                0.3s
+                ease;
+        }
+
+        .tech-card:hover
+        .tech-card-click {
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.65
+                );
+
+            border-color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.75
+                );
+        }
+
+
+        /* ============================================================
+           DIVISÃO ANTES DE FERRAMENTAS
+        ============================================================ */
+
+        .tools-divider {
+            position: relative;
+
+            width: 100%;
+            height: 3px;
+
+            background: #786000;
+
+            box-shadow:
+
+                0 0 5px
+                rgba(
+                    170,
+                    135,
+                    0,
+                    0.85
+                ),
+
+                0 0 14px
+                rgba(
+                    150,
+                    115,
+                    0,
+                    0.75
+                ),
+
+                0 0 30px
+                rgba(
+                    130,
+                    100,
+                    0,
+                    0.50
+                );
+
+            z-index: 10;
+        }
+
+        .tools-divider::before {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            width: 42%;
+            height: 1px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.9
+                );
+
+            box-shadow:
+                0 0 10px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.9
+                ),
+
+                0 0 25px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.55
+                );
+        }
+
+
+        /* ============================================================
+           SEÇÃO DE FERRAMENTAS
+        ============================================================ */
+
+        .programacao-tools {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            padding:
+                100px
+                5vw
+                120px;
+
+            background: #000;
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+        .programacao-tools::before {
+            content: "";
+
+            position: absolute;
+
+            top: 5%;
+            left: 50%;
+
+            width: 850px;
+            height: 600px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                radial-gradient(
+                    ellipse,
+                    rgba(
+                        160,
+                        125,
+                        0,
+                        0.15
+                    ),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        /* ============================================================
+           CABEÇALHO DAS FERRAMENTAS
+        ============================================================ */
+
+        .tools-heading {
+            position: relative;
+
+            width: min(
+                1100px,
+                100%
+            );
+
+            margin:
+                0 auto 70px;
+
+            text-align: center;
+        }
+
+        .tools-heading span {
+            display: block;
+
+            margin-bottom: 15px;
+
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.78
+                );
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.42em;
+
+            text-transform: uppercase;
+        }
+
+        .tools-heading h2 {
+            margin-bottom: 18px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    2rem,
+                    4.2vw,
+                    4.5rem
+                );
+
+            font-weight: 900;
+
+            letter-spacing:
+                -0.045em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 18px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                );
+        }
+
+        .tools-heading p {
+            max-width: 680px;
+
+            margin: 0 auto;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.56
+                );
+
+            font-size:
+                clamp(
+                    14px,
+                    1.3vw,
+                    17px
+                );
+
+            line-height: 1.7;
+        }
+
+
+        /* ============================================================
+           GRADE DAS FERRAMENTAS
+        ============================================================ */
+
+        .tools-grid {
+            position: relative;
+
+            width: min(
+                1500px,
+                100%
+            );
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap:
+                55px
+                45px;
+        }
+
+
+        /* ============================================================
+           CARD DA FERRAMENTA
+        ============================================================ */
+
+        .tool-card {
+            position: relative;
+
+            min-width: 0;
+
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            padding: 24px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.28
+                );
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #332800,
+                    #0b0902 62%,
+                    #000 100%
+                );
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            isolation: isolate;
+
+            box-shadow:
+
+                0 0 15px
+                rgba(
+                    130,
+                    100,
+                    0,
+                    0.14
+                ),
+
+                inset 0 0 35px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.06
+                );
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease;
+        }
+
+
+        /* ============================================================
+           FUNDO ANIMADO
+        ============================================================ */
+
+        .tool-card::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -1;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.42
+                    ),
+                    transparent 63%
+                );
+
+            transform:
+                translateY(105%);
+
+            transition:
+                transform
+                1s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+        .tool-card.revealed::before {
+            transform:
+                translateY(0);
+        }
+
+        .tool-card:hover {
+            transform:
+                translateY(-10px)
+                scale(1.025);
+
+            border-color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.85
+                );
+
+            box-shadow:
+
+                0 0 20px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.32
+                ),
+
+                0 0 50px
+                rgba(
+                    145,
+                    115,
+                    0,
+                    0.24
+                ),
+
+                inset 0 0 35px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.10
+                );
+        }
+
+
+        /* ============================================================
+           CÍRCULO INTERNO DA IMAGEM
+        ============================================================ */
+
+        .tool-card-image {
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background: #332800;
+
+            z-index: 2;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+        }
+
+        .tool-card-image img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+            transition:
+                transform
+                0.45s
+                ease;
+        }
+
+        .tool-card:hover
+        .tool-card-image img {
+            transform:
+                scale(1.065);
+        }
+
+
+        /* ============================================================
+           BRILHO SOBRE A IMAGEM
+        ============================================================ */
+
+        .tool-card-image::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.16
+                    ),
+                    transparent 35%,
+                    transparent 65%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.12
+                    )
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           INFORMAÇÃO DA FERRAMENTA
+        ============================================================ */
+
+        .tool-card-info {
+            position: absolute;
+
+            left: 15%;
+            right: 15%;
+            bottom: 18%;
+
+            z-index: 4;
+
+            text-align: center;
+
+            pointer-events: none;
+        }
+
+        .tool-card-number {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color:
+                rgba(
+                    255,
+                    225,
+                    100,
+                    0.80
+                );
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.24em;
+        }
+
+        .tool-card-info h3 {
+            color: #fff;
+
+            font-size:
+                clamp(
+                    1rem,
+                    1.5vw,
+                    1.5rem
+                );
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 2px 12px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.95
+                );
+        }
+
+        .tool-card-info small {
+            display: block;
+
+            margin-top: 5px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.70
+                );
+
+            font-size: 9px;
+
+            letter-spacing:
+                0.10em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* ============================================================
+           INDICADOR DE CLIQUE DAS FERRAMENTAS
+        ============================================================ */
+
+        .tool-card-click {
+            position: absolute;
+
+            top: 14%;
+            right: 14%;
+
+            z-index: 6;
+
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.34
+                );
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    45,
+                    35,
+                    0,
+                    0.62
+                );
+
+            color: #fff;
+
+            font-size: 14px;
+
+            backdrop-filter:
+                blur(6px);
+
+            transition:
+                background
+                0.3s
+                ease,
+
+                border-color
+                0.3s
+                ease,
+
+                transform
+                0.3s
+                ease;
+        }
+
+        .tool-card:hover
+        .tool-card-click {
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.72
+                );
+
+            border-color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.80
+                );
+
+            transform:
+                rotate(90deg);
+        }
+
+
+        /* ============================================================
+           MODAL / CARD DE INFORMAÇÕES
+        ============================================================ */
+
+        .technology-modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                30px;
+
+            background:
+                rgba(
+                    10,
+                    8,
+                    0,
+                    0.82
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity
+                0.35s
+                ease,
+
+                visibility
+                0.35s
+                ease;
+        }
+
+        .technology-modal.active {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+        }
+
+
+        /* ============================================================
+           CARD INTERNO DO MODAL
+        ============================================================ */
+
+        .technology-modal-card {
+            position: relative;
+
+            width: min(
+                900px,
+                94vw
+            );
+
+            max-height:
+                90vh;
+
+            overflow-y: auto;
+
+            padding: 34px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.55
+                );
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #332800,
+                    #0b0902 65%,
+                    #000
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.28
+                ),
+
+                0 0 70px
+                rgba(
+                    145,
+                    115,
+                    0,
+                    0.22
+                );
+
+            transform:
+                translateY(35px)
+                scale(0.94);
+
+            transition:
+                transform
+                0.4s
+                cubic-bezier(
+                    0.16,
+                    1,
+                    0.3,
+                    1
+                );
+        }
+
+        .technology-modal.active
+        .technology-modal-card {
+            transform:
+                translateY(0)
+                scale(1);
+        }
+
+
+        /* ============================================================
+           BOTÃO FECHAR
+        ============================================================ */
+
+        .technology-modal-close {
+            position: absolute;
+
+            top: 20px;
+            right: 20px;
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.22
+                );
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.35
+                );
+
+            color: #fff;
+
+            font-size: 22px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            transition:
+                background
+                0.3s
+                ease,
+
+                border-color
+                0.3s
+                ease,
+
+                transform
+                0.3s
+                ease;
+        }
+
+        .technology-modal-close:hover {
+            background:
+                #ffd000;
+
+            border-color:
+                #ffe066;
+
+            transform:
+                rotate(90deg);
+        }
+
+
+        /* ============================================================
+           CONTEÚDO DO MODAL
+        ============================================================ */
+
+        .technology-modal-content {
+            display: grid;
+
+            grid-template-columns:
+                minmax(260px, 0.8fr)
+                minmax(0, 1.2fr);
+
+            gap: 38px;
+
+            align-items: center;
+        }
+
+
+        /* ============================================================
+           ESPAÇO RESERVADO PARA IMAGEM
+        ============================================================ */
+
+        .technology-modal-image {
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.42
+                );
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #4a3a06,
+                    #0b0902
+                );
+
+            box-shadow:
+                inset 0 0 35px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.10
+                );
+        }
+
+        .technology-modal-image img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+
+        /* ============================================================
+           TEXTO DO MODAL
+        ============================================================ */
+
+        .technology-modal-label {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.85
+                );
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.32em;
+
+            text-transform: uppercase;
+        }
+
+        .technology-modal-title {
+            margin-bottom: 18px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    2rem,
+                    4vw,
+                    4rem
+                );
+
+            font-weight: 900;
+
+            line-height: 0.95;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 18px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                );
+        }
+
+        .technology-modal-text {
+            margin-bottom: 25px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.68
+                );
+
+            font-size: 15px;
+
+            line-height: 1.75;
+        }
+
+
+        /* ============================================================
+           DADOS DO MODAL
+        ============================================================ */
+
+        .technology-modal-data {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 14px;
+        }
+
+        .technology-data-box {
+            padding:
+                16px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.20
+                );
+
+            border-radius: 14px;
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.05
+                );
+        }
+
+        .technology-data-box span {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.45
+                );
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.20em;
+
+            text-transform: uppercase;
+        }
+
+        .technology-data-box strong {
+            color: #fff;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE
+        ============================================================ */
+
+        @media (max-width: 1100px) {
+
+            .tools-grid {
+                grid-template-columns:
+                    repeat(
+                        3,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+                gap:
+                    40px
+                    30px;
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .sector-hero {
+                height: auto;
+
+                min-height: 100svh;
+            }
+
+            .sector-hero-content {
+                position: relative;
+
+                z-index: 1;
+
+                width: min(
+                    1400px,
+                    90%
+                );
+
+                height: auto;
+
+                min-height: 100svh;
+
+                padding:
+                    100px
+                    0;
+
+                grid-template-columns: 1fr;
+
+                gap: 60px;
+
+                text-align: center;
+            }
+
+            .sector-hero-text {
+                max-width: 800px;
+
+                margin: 0 auto;
+
+                text-align: center;
+            }
+
+            .sector-hero-text p {
+                margin: 0 auto;
+            }
+
+            .sector-hero-symbol {
+                order: 2;
+
+                padding-left: 0;
+            }
+
+            .sector-symbol-ring {
+                width:
+                    clamp(
+                        210px,
+                        45vw,
+                        320px
+                    );
+            }
+
+            .programacao-technologies {
+                padding:
+                    80px
+                    4vw
+                    100px;
+            }
+
+            .technologies-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+                gap: 24px;
+            }
+
+            .programacao-tools {
+                padding:
+                    80px
+                    4vw
+                    100px;
+            }
+
+            .tools-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+                width: min(
+                    700px,
+                    100%
+                );
+
+                gap:
+                    45px
+                    35px;
+            }
+
+            .technology-modal-content {
+                grid-template-columns: 1fr;
+
+                gap: 28px;
+            }
+
+            .technology-modal-image {
+                width: min(
+                    300px,
+                    100%
+                );
+
+                margin: 0 auto;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            .sector-hero-content {
+                width: 88%;
+
+                padding:
+                    80px
+                    0;
+
+                gap: 50px;
+            }
+
+            .sector-hero-label {
+                font-size: 9px;
+
+                letter-spacing:
+                    0.30em;
+            }
+
+            .sector-hero-text h1 {
+                font-size:
+                    clamp(
+                        2.5rem,
+                        13vw,
+                        4.2rem
+                    );
+            }
+
+            .sector-hero-text p {
+                font-size: 14px;
+
+                line-height: 1.65;
+            }
+
+            .sector-symbol-ring {
+                width: 220px;
+            }
+
+            .sector-symbol-core {
+                width: 42%;
+            }
+
+            .programacao-technologies {
+                padding:
+                    65px
+                    5vw
+                    80px;
+            }
+
+            .technologies-heading {
+                margin-bottom: 45px;
+            }
+
+            .technologies-heading h2 {
+                font-size:
+                    clamp(
+                        2rem,
+                        10vw,
+                        3rem
+                    );
+            }
+
+            .technologies-grid {
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+            .tech-card {
+                aspect-ratio: 1 / 0.82;
+
+                border-radius: 20px;
+            }
+
+            .programacao-tools {
+                padding:
+                    65px
+                    5vw
+                    80px;
+            }
+
+            .tools-heading {
+                margin-bottom: 45px;
+            }
+
+            .tools-heading h2 {
+                font-size:
+                    clamp(
+                        2rem,
+                        10vw,
+                        3rem
+                    );
+            }
+
+            .tools-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+                gap:
+                    28px
+                    18px;
+            }
+
+            .tool-card {
+                padding: 14px;
+            }
+
+            .tool-card-info {
+                left: 10%;
+                right: 10%;
+                bottom: 17%;
+            }
+
+            .tool-card-info h3 {
+                font-size:
+                    clamp(
+                        0.82rem,
+                        3.5vw,
+                        1.15rem
+                    );
+            }
+
+            .tool-card-info small {
+                font-size: 7px;
+            }
+
+            .tool-card-click {
+                width: 25px;
+                height: 25px;
+
+                font-size: 12px;
+            }
+
+            .technology-modal {
+                padding:
+                    15px;
+            }
+
+            .technology-modal-card {
+                padding: 25px 20px;
+
+                border-radius: 22px;
+            }
+
+            .technology-modal-close {
+                top: 15px;
+                right: 15px;
+            }
+
+            .technology-modal-title {
+                padding-right: 35px;
+            }
+
+            .technology-modal-data {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        /* ============================================================
+           REDUÇÃO DE MOVIMENTO
+        ============================================================ */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+
+                scroll-behavior:
+                    auto !important;
+            }
+
+        }
+
+
+        /* ============================================================
+           SEÇÃO — ACESSAR PORTFÓLIO
+        ============================================================ */
+
+        .portfolio-access {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 72vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                100px
+                5vw;
+
+            background: #000;
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+
+        /* ============================================================
+           FUNDO
+        ============================================================ */
+
+        .portfolio-access-background {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.16
+                    ),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(
+                        145,
+                        115,
+                        0,
+                        0.12
+                    ),
+                    transparent 35%
+                ),
+
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.10
+                    ),
+                    transparent 35%
+                );
+        }
+
+
+        /* ============================================================
+           EFEITO CENTRAL
+        ============================================================ */
+
+        .portfolio-access::before {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 520px;
+            height: 520px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.12
+                );
+
+            box-shadow:
+
+                0 0 40px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.08
+                ),
+
+                inset 0 0 50px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.05
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           SEGUNDO ANEL
+        ============================================================ */
+
+        .portfolio-access::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 720px;
+            height: 720px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.055
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* ============================================================
+           CONTEÚDO
+        ============================================================ */
+
+        .portfolio-access-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: min(
+                900px,
+                100%
+            );
+
+            text-align: center;
+        }
+
+
+        /* ============================================================
+           LABEL
+        ============================================================ */
+
+        .portfolio-access-label {
+            display: block;
+
+            margin-bottom: 18px;
+
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.82
+                );
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.45em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 12px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.55
+                );
+        }
+
+
+        /* ============================================================
+           TÍTULO
+        ============================================================ */
+
+        .portfolio-access-content h2 {
+            margin: 0 0 24px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    3rem,
+                    8vw,
+                    7rem
+                );
+
+            font-weight: 900;
+
+            line-height: 0.9;
+
+            letter-spacing:
+                -0.06em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.75
+                ),
+
+                0 0 40px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                ),
+
+                0 0 80px
+                rgba(
+                    255,
+                    190,
+                    0,
+                    0.18
+                );
+        }
+
+
+        /* ============================================================
+           DESCRIÇÃO
+        ============================================================ */
+
+        .portfolio-access-content p {
+            width: min(
+                650px,
+                100%
+            );
+
+            margin:
+                0 auto 38px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.58
+                );
+
+            font-size:
+                clamp(
+                    14px,
+                    1.3vw,
+                    17px
+                );
+
+            line-height: 1.75;
+        }
+
+
+        /* ============================================================
+           BOTÃO
+        ============================================================ */
+
+        .portfolio-access-button {
+            position: relative;
+
+            width: fit-content;
+
+            min-width: 230px;
+
+            min-height: 62px;
+
+            margin: 0 auto;
+
+            padding:
+                0 26px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 18px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.75
+                );
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd000,
+                    #a88700
+                );
+
+            color: #fff;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.18em;
+
+            text-transform: uppercase;
+
+            box-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.38
+                ),
+
+                0 0 40px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.16
+                );
+
+            overflow: hidden;
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease;
+        }
+
+
+        /* ============================================================
+           BRILHO DO BOTÃO
+        ============================================================ */
+
+        .portfolio-access-button::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -120%;
+
+            width: 70%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    transparent,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.24
+                    ),
+                    transparent
+                );
+
+            transform:
+                skewX(-20deg);
+
+            transition:
+                left
+                0.65s
+                ease;
+        }
+
+        .portfolio-access-button:hover::before {
+            left: 140%;
+        }
+
+
+        /* ============================================================
+           HOVER
+        ============================================================ */
+
+        .portfolio-access-button:hover {
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.85
+                );
+
+            box-shadow:
+
+                0 0 20px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.55
+                ),
+
+                0 0 55px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.28
+                );
+        }
+
+
+        /* ============================================================
+           SETA
+        ============================================================ */
+
+        .portfolio-access-arrow {
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 21px;
+
+            line-height: 1;
+
+            transition:
+                transform
+                0.35s
+                ease;
+        }
+
+        .portfolio-access-button:hover
+        .portfolio-access-arrow {
+            transform:
+                translateX(6px);
+        }
+
+
+        /* ============================================================
+           TEXTO DO BOTÃO
+        ============================================================ */
+
+        .portfolio-access-button span:first-child {
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE
+        ============================================================ */
+
+        @media (max-width: 560px) {
+
+            .portfolio-access {
+                min-height: 65vh;
+
+                padding:
+                    80px
+                    5vw;
+            }
+
+            .portfolio-access::before {
+                width: 360px;
+                height: 360px;
+            }
+
+            .portfolio-access::after {
+                width: 500px;
+                height: 500px;
+            }
+
+            .portfolio-access-content h2 {
+                font-size:
+                    clamp(
+                        3.2rem,
+                        17vw,
+                        5rem
+                    );
+            }
+
+            .portfolio-access-content p {
+                font-size: 14px;
+
+                line-height: 1.65;
+
+                margin-bottom: 32px;
+            }
+
+            .portfolio-access-button {
+                width: 100%;
+
+                min-width: 0;
+
+                max-width: 300px;
+            }
+
+        }
+
+
+        /* ============================================================
+           SEÇÃO DE CONTATOS
+        ============================================================ */
+
+        .programacao-contact {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            padding:
+                110px
+                5vw
+                0;
+
+            background: #000;
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+
+        /* ============================================================
+           BRILHO DE FUNDO
+        ============================================================ */
+
+        .contact-background-glow {
+            position: absolute;
+
+            top: 8%;
+            left: 50%;
+
+            width: 800px;
+            height: 600px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                radial-gradient(
+                    ellipse,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.14
+                    ),
+                    transparent 68%
+                );
+
+            filter:
+                blur(10px);
+
+            pointer-events: none;
+
+            z-index: -2;
+
+            animation:
+                contactGlow
+                6s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes contactGlow {
+
+            0%,
+            100% {
+                opacity: 0.55;
+
+                transform:
+                    translateX(-50%)
+                    scale(0.95);
+            }
+
+            50% {
+                opacity: 1;
+
+                transform:
+                    translateX(-50%)
+                    scale(1.08);
+            }
+        }
+
+
+        /* ============================================================
+           GRADE TECNOLÓGICA
+        ============================================================ */
+
+        .contact-grid {
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.035
+                    )
+                    1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.035
+                    )
+                    1px,
+                    transparent 1px
+                );
+
+            background-size:
+                70px 70px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 20%,
+                    black 80%,
+                    transparent
+                );
+
+            pointer-events: none;
+
+            z-index: -3;
+
+            opacity: 0.55;
+        }
+
+
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
+
+        .contact-container {
+            position: relative;
+
+            width: min(
+                1400px,
+                100%
+            );
+
+            margin:
+                0 auto;
+        }
+
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+
+        .contact-heading {
+            width: min(
+                850px,
+                100%
+            );
+
+            margin:
+                0 auto 70px;
+
+            text-align: center;
+        }
+
+        .contact-heading span {
+            display: block;
+
+            margin-bottom: 15px;
+
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.82
+                );
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.42em;
+
+            text-transform: uppercase;
+        }
+
+        .contact-heading h2 {
+            margin-bottom: 20px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    2.2rem,
+                    5vw,
+                    5rem
+                );
+
+            font-weight: 900;
+
+            letter-spacing:
+                -0.055em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.45
+                ),
+
+                0 0 40px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.18
+                );
+        }
+
+        .contact-heading p {
+            max-width: 650px;
+
+            margin:
+                0 auto;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.56
+                );
+
+            font-size:
+                clamp(
+                    14px,
+                    1.3vw,
+                    17px
+                );
+
+            line-height: 1.75;
+        }
+
+
+        /* ============================================================
+           PAINEL
+        ============================================================ */
+
+        .contact-panel {
+            position: relative;
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(
+                    280px,
+                    0.8fr
+                )
+                minmax(
+                    0,
+                    1.2fr
+                );
+
+            gap: 50px;
+
+            padding: 45px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.24
+                );
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        51,
+                        40,
+                        0,
+                        0.72
+                    ),
+                    rgba(
+                        11,
+                        9,
+                        2,
+                        0.82
+                    ),
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.92
+                    )
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    130,
+                    100,
+                    0,
+                    0.12
+                ),
+
+                inset 0 0 45px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.025
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+            overflow: hidden;
+        }
+
+
+        /* ============================================================
+           LINHA DE BRILHO DO PAINEL
+        ============================================================ */
+
+        .contact-panel::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -30%;
+
+            width: 60%;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #ffe066,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 12px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.9
+                );
+
+            animation:
+                contactPanelScan
+                5s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes contactPanelScan {
+
+            0% {
+                left: -30%;
+            }
+
+            50% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+
+        /* ============================================================
+           BLOCO DE DESTAQUE
+        ============================================================ */
+
+        .contact-highlight {
+            position: relative;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding:
+                25px
+                20px
+                25px
+                10px;
+        }
+
+        .contact-highlight-line {
+            width: 55px;
+
+            height: 3px;
+
+            margin-bottom: 28px;
+
+            background:
+                #ffd000;
+
+            box-shadow:
+
+                0 0 8px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.9
+                ),
+
+                0 0 25px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.55
+                );
+        }
+
+        .contact-highlight-label {
+            margin-bottom: 15px;
+
+            color:
+                rgba(
+                    255,
+                    225,
+                    100,
+                    0.75
+                );
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.30em;
+
+            text-transform: uppercase;
+        }
+
+        .contact-highlight h3 {
+            max-width: 500px;
+
+            margin-bottom: 22px;
+
+            color: #fff;
+
+            font-size:
+                clamp(
+                    2.4rem,
+                    4vw,
+                    4.6rem
+                );
+
+            font-weight: 900;
+
+            line-height: 0.95;
+
+            letter-spacing:
+                -0.055em;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 0 20px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.30
+                );
+        }
+
+        .contact-highlight h3 strong {
+            display: block;
+
+            color:
+                #ffd000;
+
+            font-weight: 900;
+
+            text-shadow:
+
+                0 0 12px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.85
+                ),
+
+                0 0 35px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.40
+                );
+        }
+
+        .contact-highlight p {
+            max-width: 480px;
+
+            margin-bottom: 32px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.56
+                );
+
+            font-size: 14px;
+
+            line-height: 1.75;
+        }
+
+
+        /* ============================================================
+           BOTÃO PRINCIPAL
+        ============================================================ */
+
+        .contact-main-button {
+            position: relative;
+
+            width: fit-content;
+
+            min-width: 190px;
+
+            height: 52px;
+
+            padding:
+                0 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.65
+                );
+
+            border-radius: 8px;
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.08
+                );
+
+            color: #fff;
+
+            text-decoration: none;
+
+            overflow: hidden;
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                background
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease;
+        }
+
+        .contact-main-button::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    transparent,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.16
+                    ),
+                    transparent
+                );
+
+            transform:
+                translateX(-120%);
+
+            transition:
+                transform
+                0.65s
+                ease;
+        }
+
+        .contact-main-button:hover {
+            transform:
+                translateY(-4px);
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.22
+                );
+
+            border-color:
+                #ffe066;
+
+            box-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                ),
+
+                0 0 35px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.15
+                );
+        }
+
+        .contact-main-button:hover::before {
+            transform:
+                translateX(120%);
+        }
+
+        .contact-main-button span:first-child {
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.16em;
+        }
+
+        .contact-main-arrow {
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 20px;
+
+            color:
+                #ffe066;
+
+            transition:
+                transform
+                0.3s
+                ease;
+        }
+
+        .contact-main-button:hover
+        .contact-main-arrow {
+            transform:
+                translateX(5px);
+        }
+
+
+        /* ============================================================
+           REDES SOCIAIS
+        ============================================================ */
+
+        .contact-socials {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 14px;
+
+            align-content: center;
+        }
+
+
+        /* ============================================================
+           CARD SOCIAL
+        ============================================================ */
+
+        .contact-social {
+            position: relative;
+
+            min-height: 86px;
+
+            padding:
+                15px
+                18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.09
+                );
+
+            border-radius: 15px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.025
+                );
+
+            color: #fff;
+
+            text-decoration: none;
+
+            overflow: hidden;
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease,
+
+                background
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease;
+        }
+
+        .contact-social::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 25%,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.12
+                    ),
+                    transparent 70%
+                );
+
+            transform:
+                translateX(-120%);
+
+            transition:
+                transform
+                0.7s
+                ease;
+        }
+
+        .contact-social:hover {
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.65
+                );
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.07
+                );
+
+            box-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.20
+                ),
+
+                0 0 30px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.08
+                );
+        }
+
+        .contact-social:hover::before {
+            transform:
+                translateX(120%);
+        }
+
+
+        /* ============================================================
+           ÍCONE SOCIAL
+        ============================================================ */
+
+        .contact-social-icon {
+            position: relative;
+
+            z-index: 2;
+
+            flex-shrink: 0;
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.25
+                );
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.07
+                );
+
+            overflow: hidden;
+
+            transition:
+                transform
+                0.35s
+                ease,
+
+                border-color
+                0.35s
+                ease,
+
+                box-shadow
+                0.35s
+                ease;
+        }
+
+        .contact-social-icon img {
+            width: 24px;
+            height: 24px;
+
+            display: block;
+
+            object-fit: contain;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+        }
+
+        .contact-social:hover
+        .contact-social-icon {
+            transform:
+                scale(1.10)
+                rotate(4deg);
+
+            border-color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.85
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                );
+        }
+
+
+        /* ============================================================
+           INFORMAÇÕES
+        ============================================================ */
+
+        .contact-social-info {
+            position: relative;
+
+            z-index: 2;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+        .contact-social-info strong {
+            color: #fff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+        .contact-social-info small {
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.40
+                );
+
+            font-size: 9px;
+
+            letter-spacing:
+                0.10em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* ============================================================
+           SETA
+        ============================================================ */
+
+        .contact-social-arrow {
+            position: relative;
+
+            z-index: 2;
+
+            margin-left: auto;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.35
+                );
+
+            font-size: 18px;
+
+            transition:
+                color
+                0.3s
+                ease,
+
+                transform
+                0.3s
+                ease;
+        }
+
+        .contact-social:hover
+        .contact-social-arrow {
+            color:
+                #ffe066;
+
+            transform:
+                translate(
+                    3px,
+                    -3px
+                );
+        }
+
+
+        /* ============================================================
+           RODAPÉ
+        ============================================================ */
+
+        .contact-footer {
+            position: relative;
+
+            width: 100%;
+
+            margin-top: 90px;
+
+            padding:
+                28px
+                0
+                35px;
+        }
+
+        .contact-footer-line {
+            width: 100%;
+
+            height: 1px;
+
+            margin-bottom: 24px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(
+                        255,
+                        208,
+                        0,
+                        0.75
+                    ),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 10px
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.35
+                );
+        }
+
+        .contact-footer-content {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.35
+                );
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing:
+                0.20em;
+
+            text-transform: uppercase;
+        }
+
+        .contact-footer-content span:nth-child(2) {
+            color:
+                rgba(
+                    255,
+                    208,
+                    0,
+                    0.70
+                );
+        }
+
+
+        /* ============================================================
+           RESPONSIVIDADE
+        ============================================================ */
+
+        @media (max-width: 1000px) {
+
+            .contact-panel {
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+            .contact-highlight {
+                padding:
+                    10px
+                    10px
+                    20px;
+            }
+
+            .contact-socials {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .programacao-contact {
+                padding:
+                    80px
+                    5vw
+                    0;
+            }
+
+            .contact-heading {
+                margin-bottom: 45px;
+            }
+
+            .contact-heading h2 {
+                font-size:
+                    clamp(
+                        2.2rem,
+                        12vw,
+                        3.5rem
+                    );
+            }
+
+            .contact-panel {
+                padding:
+                    25px
+                    18px;
+
+                border-radius: 22px;
+            }
+
+            .contact-highlight {
+                padding:
+                    10px
+                    5px
+                    20px;
+            }
+
+            .contact-highlight h3 {
+                font-size:
+                    clamp(
+                        2.3rem,
+                        11vw,
+                        3.4rem
+                    );
+            }
+
+            .contact-socials {
+                grid-template-columns: 1fr;
+
+                gap: 12px;
+            }
+
+            .contact-social {
+                min-height: 78px;
+            }
+
+            .contact-footer {
+                margin-top: 60px;
+            }
+
+            .contact-footer-content {
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 12px;
+            }
+
+        }
+
+
+        /* ============================================================
+           REDUÇÃO DE MOVIMENTO
+        ============================================================ */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            .contact-background-glow,
+            .contact-panel::before {
+                animation: none;
+            }
+
+            .contact-main-button,
+            .contact-social,
+            .contact-social-icon,
+            .contact-social-arrow {
+                transition: none;
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ============================================================
+         INTRODUÇÃO
+    ============================================================ -->
+
+    <section
+        class="intro-screen"
+        id="introScreen"
+    >
+
+        <div class="sun-rays"></div>
+
+
+        <div class="intro-content">
+
+            <div class="intro-image">
+
+                <img
+                    src="img/acessadm.jpg"
+                    alt="Administração"
+                    draggable="false"
+                >
+
+            </div>
+
+
+            <h1 class="intro-title">
+                ADMINISTRAÇÃO
+            </h1>
+
+
+            <p class="intro-subtitle">
+                GESTÃO • ORGANIZAÇÃO • ESTRATÉGIA
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================================================
+         PÁGINA PRINCIPAL
+    ============================================================ -->
+
+    <main
+        class="main-page"
+        id="mainPage"
+    >
+
+
+        <section
+            class="sector-hero administracao-hero"
+        >
+
+
+            <!-- ====================================================
+                 IMAGEM DE FUNDO
+            ==================================================== -->
+
+            <div
+                class="sector-hero-background"
+            >
+
+                <img
+                    src="img/fundosintro (2).png"
+                    alt=""
+                    draggable="false"
+                >
+
+            </div>
+
+
+            <!-- ====================================================
+                 OVERLAY
+            ==================================================== -->
+
+            <div
+                class="sector-hero-overlay"
+            ></div>
+
+
+            <!-- ====================================================
+                 CONTEÚDO
+            ==================================================== -->
+
+            <div
+                class="sector-hero-content"
+            >
+
+
+                <!-- =================================================
+                     LADO ESQUERDO
+                ================================================= -->
+
+                <div
+                    class="sector-hero-text"
+                >
+
+                    <span
+                        class="sector-hero-label"
+                    >
+                        ÁREA
+                    </span>
+
+
+                    <h1>
+                        ADMINISTRAÇÃO
+                    </h1>
+
+
+                    <p>
+                        Gestão, planejamento, organização, processos,
+                        marketing, logística, análise de dados e
+                        construção de soluções voltadas para o
+                        funcionamento estratégico das organizações.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     LADO DIREITO
+                ================================================= -->
+
+                <div
+                    class="sector-hero-symbol"
+                >
+
+                    <div
+                        class="sector-symbol-ring"
+                    >
+
+                        <div
+                            class="sector-symbol-core"
+                        >
+
+                            <img
+                                src="img/administrationanel.jpg"
+                                alt="Símbolo de Administração"
+                                draggable="false"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        </section>
+
+
+                <!-- ========================================================
+                     DIVISÃO
+                ======================================================== -->
+
+                <div
+                    class="section-divider"
+                    aria-hidden="true"
+                ></div>
+
+
+                <!-- ========================================================
+                     SEÇÃO DE TECNOLOGIAS
+                ======================================================== -->
+
+                <section
+                    class="programacao-technologies"
+                    id="technologies"
+                    aria-label="Áreas de Administração"
+                >
+
+                    <header
+                        class="technologies-heading"
+                    >
+
+                        <span>
+                            ÁREAS
+                        </span>
+
+
+                        <h2>
+                            ADMINISTRAÇÃO
+                        </h2>
+
+
+                        <p>
+                            Áreas de conhecimento e atuação relacionadas
+                            à gestão, organização, planejamento e desenvolvimento
+                            de negócios e processos administrativos.
+                        </p>
+
+                    </header>
+
+
+                    <div
+                        class="technologies-grid"
+                    >
+
+
+                        <!-- =================================================
+                             01 — LOGÍSTICA
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="logistica"
+                            aria-label="Ver informações sobre Logística"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/logistica.jpg"
+                                    alt="Logística"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    01
+                                </span>
+
+
+                                <h3>
+                                    Logística
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             02 — MARKETING
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="marketing"
+                            aria-label="Ver informações sobre Marketing"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/marketing.jpg"
+                                    alt="Marketing"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    02
+                                </span>
+
+
+                                <h3>
+                                    Marketing
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             03 — GESTÃO DE PROJETOS
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="gestao-projetos"
+                            aria-label="Ver informações sobre Gestão de Projetos"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/gestaodeprojetos.jpg"
+                                    alt="Gestão de Projetos"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    03
+                                </span>
+
+
+                                <h3>
+                                    Gestão de Projetos
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             04 — RECURSOS HUMANOS
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="recursos-humanos"
+                            aria-label="Ver informações sobre Recursos Humanos"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/recursoshumanos.jpg"
+                                    alt="Recursos Humanos"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    04
+                                </span>
+
+
+                                <h3>
+                                    Recursos Humanos
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             05 — FINANÇAS
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="financas"
+                            aria-label="Ver informações sobre Finanças"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/financas.jpg"
+                                    alt="Finanças"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    05
+                                </span>
+
+
+                                <h3>
+                                    Finanças
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             06 — OPERAÇÕES E PROCESSOS
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="operacoes-processos"
+                            aria-label="Ver informações sobre Operações e Processos"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/operacoeseprocessos.jpg"
+                                    alt="Operações e Processos"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    06
+                                </span>
+
+
+                                <h3>
+                                    Operações e Processos
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             07 — GESTÃO DE QUALIDADE
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="gestao-qualidade"
+                            aria-label="Ver informações sobre Gestão de Qualidade"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/gestaodaqualidade.jpg"
+                                    alt="Gestão de Qualidade"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    07
+                                </span>
+
+
+                                <h3>
+                                    Gestão de Qualidade
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             08 — ESTRATÉGIA E PLANEJAMENTO
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="estrategia-planejamento"
+                            aria-label="Ver informações sobre Estratégia e Planejamento"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/estrategiaeplanejamento.jpg"
+                                    alt="Estratégia e Planejamento"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    08
+                                </span>
+
+
+                                <h3>
+                                    Estratégia e Planejamento
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             09 — INOVAÇÃO E TECNOLOGIA
+                        ================================================= -->
+
+                        <button
+                            class="tech-card"
+                            type="button"
+                            data-tech="inovacao-tecnologia"
+                            aria-label="Ver informações sobre Inovação e Tecnologia"
+                        >
+
+                            <div
+                                class="tech-card-image"
+                            >
+
+                                <img
+                                    src="img/inovacaoetecnologia.jpg"
+                                    alt="Inovação e Tecnologia"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tech-card-info"
+                            >
+
+                                <span
+                                    class="tech-card-number"
+                                >
+                                    09
+                                </span>
+
+
+                                <h3>
+                                    Inovação e Tecnologia
+                                </h3>
+
+
+                                <small>
+                                    Conhecimento
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tech-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================================
+                     DIVISÃO — FERRAMENTAS
+                ======================================================== -->
+
+                <div
+                    class="tools-divider"
+                    aria-hidden="true"
+                ></div>
+
+
+                <!-- ========================================================
+                     SEÇÃO DE FERRAMENTAS
+                ======================================================== -->
+
+                <section
+                    class="programacao-tools"
+                    id="tools"
+                    aria-label="Ferramentas de Administração"
+                >
+
+                    <header
+                        class="tools-heading"
+                    >
+
+                        <span>
+                            FERRAMENTAS
+                        </span>
+
+
+                        <h2>
+                            ADMINISTRAÇÃO
+                        </h2>
+
+
+                        <p>
+                            Ferramentas e metodologias utilizadas para análise,
+                            planejamento, organização, gestão, controle e
+                            desenvolvimento de processos e negócios.
+                        </p>
+
+                    </header>
+
+
+                    <div
+                        class="tools-grid"
+                    >
+
+
+                        <!-- =================================================
+                             01 — ANÁLISE SWOT
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="swot"
+                            aria-label="Ver informações sobre Análise SWOT"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/análisedeswot.png"
+                                    alt="Análise SWOT"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    01
+                                </span>
+
+
+                                <h3>
+                                    Análise SWOT
+                                </h3>
+
+
+                                <small>
+                                    Análise Estratégica
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             02 — MATRIZ BCG
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="bcg"
+                            aria-label="Ver informações sobre Matriz BCG"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/matrizbcg.png"
+                                    alt="Matriz BCG"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    02
+                                </span>
+
+
+                                <h3>
+                                    Matriz BCG
+                                </h3>
+
+
+                                <small>
+                                    Análise de Portfólio
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             03 — 5 FORÇAS DE PORTER
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="porter"
+                            aria-label="Ver informações sobre 5 Forças de Porter"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/5forcasdeporter.png"
+                                    alt="5 Forças de Porter"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    03
+                                </span>
+
+
+                                <h3>
+                                    5 Forças de Porter
+                                </h3>
+
+
+                                <small>
+                                    Análise Competitiva
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             04 — 5W2H
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="5w2h"
+                            aria-label="Ver informações sobre 5W2H"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/5w2h.png"
+                                    alt="5W2H"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    04
+                                </span>
+
+
+                                <h3>
+                                    5W2H
+                                </h3>
+
+
+                                <small>
+                                    Plano de Ação
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             05 — PDCA
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="pdca"
+                            aria-label="Ver informações sobre PDCA"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/pdca.png"
+                                    alt="PDCA"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    05
+                                </span>
+
+
+                                <h3>
+                                    PDCA
+                                </h3>
+
+
+                                <small>
+                                    Melhoria Contínua
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             06 — DIAGRAMA DE ISHIKAWA
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="ishikawa"
+                            aria-label="Ver informações sobre Diagrama de Ishikawa"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/ishikaw.png"
+                                    alt="Diagrama de Ishikawa"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    06
+                                </span>
+
+
+                                <h3>
+                                    Diagrama de Ishikawa
+                                </h3>
+
+
+                                <small>
+                                    Análise de Causa
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             07 — MATRIZ GUT
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="gut"
+                            aria-label="Ver informações sobre Matriz GUT"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/matrizgut.png"
+                                    alt="Matriz GUT"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    07
+                                </span>
+
+
+                                <h3>
+                                    Matriz GUT
+                                </h3>
+
+
+                                <small>
+                                    Priorização
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             08 — MATRIZ SWOT CRUZADA
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="swot-cruzada"
+                            aria-label="Ver informações sobre Matriz SWOT Cruzada"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/swotcruzada.png"
+                                    alt="Matriz SWOT Cruzada"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    08
+                                </span>
+
+
+                                <h3>
+                                    SWOT Cruzada
+                                </h3>
+
+
+                                <small>
+                                    Estratégia
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             09 — OKRs
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="okr"
+                            aria-label="Ver informações sobre OKRs"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/orks.png"
+                                    alt="OKRs"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    09
+                                </span>
+
+
+                                <h3>
+                                    OKRs
+                                </h3>
+
+
+                                <small>
+                                    Gestão de Metas
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             10 — KPIs
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="kpis"
+                            aria-label="Ver informações sobre KPIs"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/kpis.png"
+                                    alt="KPIs"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    10
+                                </span>
+
+
+                                <h3>
+                                    KPIs
+                                </h3>
+
+
+                                <small>
+                                    Indicadores
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             11 — CURVA ABC
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="curva-abc"
+                            aria-label="Ver informações sobre Curva ABC"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/curvaabc.png"
+                                    alt="Curva ABC"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    11
+                                </span>
+
+
+                                <h3>
+                                    Curva ABC
+                                </h3>
+
+
+                                <small>
+                                    Gestão de Estoque
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             12 — CICLO DE VIDA DO PRODUTO
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="ciclo-produto"
+                            aria-label="Ver informações sobre Ciclo de Vida do Produto"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/ciclodevida.png"
+                                    alt="Ciclo de Vida do Produto"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    12
+                                </span>
+
+
+                                <h3>
+                                    Ciclo de Vida do Produto
+                                </h3>
+
+
+                                <small>
+                                    Gestão de Produto
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             13 — CANVAS
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="canvas"
+                            aria-label="Ver informações sobre Canvas de Modelo de Negócios"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/businessmodel.png"
+                                    alt="Canvas de Modelo de Negócios"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    13
+                                </span>
+
+
+                                <h3>
+                                    Business Model Canvas
+                                </h3>
+
+
+                                <small>
+                                    Modelo de Negócio
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             14 — MATRIZ DE EISENHOWER
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="eisenhower"
+                            aria-label="Ver informações sobre Matriz de Eisenhower"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/matrizdeeisenhower.png"
+                                    alt="Matriz de Eisenhower"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    14
+                                </span>
+
+
+                                <h3>
+                                    Matriz de Eisenhower
+                                </h3>
+
+
+                                <small>
+                                    Gestão de Prioridades
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             15 — DIAGRAMA DE PARETO
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="pareto"
+                            aria-label="Ver informações sobre Diagrama de Pareto"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/diagramadepareto.png"
+                                    alt="Diagrama de Pareto"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    15
+                                </span>
+
+
+                                <h3>
+                                    Diagrama de Pareto
+                                </h3>
+
+
+                                <small>
+                                    Análise de Problemas
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                        <!-- =================================================
+                             16 — SLA E RACI
+                        ================================================= -->
+
+                        <button
+                            class="tool-card"
+                            type="button"
+                            data-tool="sla-raci"
+                            aria-label="Ver informações sobre SLA e RACI"
+                        >
+
+                            <div
+                                class="tool-card-image"
+                            >
+
+                                <img
+                                    src="img/slaraci.png"
+                                    alt="SLA e RACI"
+                                    draggable="false"
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="tool-card-info"
+                            >
+
+                                <span
+                                    class="tool-card-number"
+                                >
+                                    16
+                                </span>
+
+
+                                <h3>
+                                    SLA e RACI
+                                </h3>
+
+
+                                <small>
+                                    Gestão e Responsabilidades
+                                </small>
+
+                            </div>
+
+
+                            <span
+                                class="tool-card-click"
+                                aria-hidden="true"
+                            >
+                                +
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- ============================================================
+                     DIVISÃO
+                ============================================================ -->
+
+                <div
+                    class="section-divider"
+                    aria-hidden="true"
+                ></div>
+
+
+                <!-- ============================================================
+                     SEÇÃO — ACESSAR PORTFÓLIO
+                ============================================================ -->
+
+                <section
+                    class="portfolio-access"
+                    id="portfolioAccess"
+                    aria-label="Acessar portfólio"
+                >
+
+
+                    <div
+                        class="portfolio-access-background"
+                    ></div>
+
+
+                    <div
+                        class="portfolio-access-content"
+                    >
+
+
+                        <span
+                            class="portfolio-access-label"
+                        >
+                            PORTFÓLIO
+                        </span>
+
+
+                        <h2>
+                            ACESSAR
+                        </h2>
+
+
+                        <p>
+                            Explore meu portfólio e conheça projetos,
+                            experiências e soluções desenvolvidas ao
+                            longo da minha trajetória.
+                        </p>
+
+
+                        <a
+                            href=" https://lucas-web-creator.github.io/Portfolio-de-Administracao-Lucas-Padroni/"
+                            class="portfolio-access-button"
+                        >
+
+                            <span>
+                                ACESSAR PORTFÓLIO
+                            </span>
+
+                            <span
+                                class="portfolio-access-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- ============================================================
+                     DIVISÃO
+                ============================================================ -->
+
+                <div
+                    class="section-divider"
+                    aria-hidden="true"
+                ></div>
+
+
+                <!-- ============================================================
+                     SEÇÃO DE CONTATOS
+                ============================================================ -->
+
+                <section
+                    class="programacao-contact"
+                    id="contato"
+                    aria-label="Contatos"
+                >
+
+
+                    <!-- ========================================================
+                         EFEITOS DE FUNDO
+                    ======================================================== -->
+
+                    <div
+                        class="contact-background-glow"
+                        aria-hidden="true"
+                    ></div>
+
+
+                    <div
+                        class="contact-grid"
+                        aria-hidden="true"
+                    ></div>
+
+
+                    <!-- ========================================================
+                         CONTEÚDO PRINCIPAL
+                    ======================================================== -->
+
+                    <div
+                        class="contact-container"
+                    >
+
+
+                        <!-- ====================================================
+                             CABEÇALHO
+                        ==================================================== -->
+
+                        <header
+                            class="contact-heading"
+                        >
+
+                            <span>
+                                CONECTE-SE
+                            </span>
+
+
+                            <h2>
+                                CONTATOS
+                            </h2>
+
+
+                            <p>
+                                Entre em contato, acompanhe meus projetos
+                                ou conheça mais do meu trabalho através
+                                das minhas principais plataformas.
+                            </p>
+
+                        </header>
+
+
+                        <!-- ====================================================
+                             PAINEL DE CONTATO
+                        ==================================================== -->
+
+                        <div
+                            class="contact-panel"
+                        >
+
+
+                            <!-- =================================================
+                                 BLOCO DE DESTAQUE
+                            ================================================= -->
+
+                            <div
+                                class="contact-highlight"
+                            >
+
+                                <div
+                                    class="contact-highlight-line"
+                                ></div>
+
+
+                                <span
+                                    class="contact-highlight-label"
+                                >
+                                    DISPONÍVEL PARA CONEXÕES
+                                </span>
+
+
+                                <h3>
+                                    VAMOS
+                                    <strong>
+                                        CONVERSAR?
+                                    </strong>
+                                </h3>
+
+
+                                <p>
+                                    Seja para conhecer meus projetos,
+                                    acompanhar meu desenvolvimento ou
+                                    estabelecer uma conexão profissional.
+                                </p>
+
+
+                                <a
+                                    href="mailto:lucaspadronialves14@gmail.com"
+                                    class="contact-main-button"
+                                >
+
+                                    <span>
+                                        ENVIAR E-MAIL
+                                    </span>
+
+                                    <span
+                                        class="contact-main-arrow"
+                                        aria-hidden="true"
+                                    >
+                                        →
+                                    </span>
+
+                                </a>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 REDES SOCIAIS
+                            ================================================= -->
+
+                            <div
+                                class="contact-socials"
+                            >
+
+
+                                <!-- =============================================
+                                     INSTAGRAM
+                                ============================================== -->
+
+                                <a
+                                    href="https://www.instagram.com/alyzoficial26/"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Instagram"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/instagramA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            Instagram
+                                        </strong>
+
+                                        <small>
+                                            Acompanhe
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     WHATSAPP
+                                ============================================== -->
+
+                                <a
+                                    href="https://wa.me/5521980101193"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="WhatsApp"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/whatsappA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            WhatsApp
+                                        </strong>
+
+                                        <small>
+                                            Mensagens
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     E-MAIL
+                                ============================================== -->
+
+                                <a
+                                    href="mailto:lucaspadronialves14@gmail.com"
+                                    class="contact-social"
+                                    aria-label="E-mail"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/emailA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            E-mail
+                                        </strong>
+
+                                        <small>
+                                            Contato direto
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     BEHANCE
+                                ============================================== -->
+
+                                <a
+                                    href="https://www.behance.net/lucaspadroni1"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Behance"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/behanceA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            Behance
+                                        </strong>
+
+                                        <small>
+                                            Projetos visuais
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     LINKEDIN
+                                ============================================== -->
+
+                                <a
+                                    href="https://www.linkedin.com/in/lucas-padroni-b14027430/"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="LinkedIn"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/linkedinA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            LinkedIn
+                                        </strong>
+
+                                        <small>
+                                            Perfil profissional
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     DRIBBBLE
+                                ============================================== -->
+
+                                <a
+                                    href="https://dribbble.com/paulo-lucas-padroni-alves-cava"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Dribbble"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/dribbbleA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            Dribbble
+                                        </strong>
+
+                                        <small>
+                                            Design e criação
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                <!-- =============================================
+                                     GITHUB
+                                ============================================== -->
+
+                                <a
+                                    href="https://github.com/Lucas-web-creator"
+                                    class="contact-social"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="GitHub"
+                                >
+
+                                    <span
+                                        class="contact-social-icon"
+                                    >
+
+                                        <img
+                                            src="img/githubA.png"
+                                            alt=""
+                                            draggable="false"
+                                        >
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-info"
+                                    >
+
+                                        <strong>
+                                            GitHub
+                                        </strong>
+
+                                        <small>
+                                            Código e projetos
+                                        </small>
+
+                                    </span>
+
+
+                                    <span
+                                        class="contact-social-arrow"
+                                    >
+                                        ↗
+                                    </span>
+
+                                </a>
+
+
+                                </div>
+
+                                </div>
+
+
+                        <!-- ====================================================
+                             RODAPÉ
+                        ==================================================== -->
+
+                        <footer
+                            class="contact-footer"
+                        >
+
+                            <div
+                                class="contact-footer-line"
+                            ></div>
+
+
+                            <div
+                                class="contact-footer-content"
+                            >
+
+                                <span>
+                                    LUCAS PADRONI
+                                </span>
+
+
+                                <span>
+                                    ADMINISTRAÇÃO
+                                </span>
+
+
+                                <span>
+                                    © 2026
+                                </span>
+
+                            </div>
+
+                        </footer>
+
+                    </div>
+
+                </section>
+
+
+            </main>
+
+
+            <!-- ============================================================
+                 MODAL DE TECNOLOGIA / FERRAMENTA
+            ============================================================ -->
+
+            <div
+                class="technology-modal"
+                id="technologyModal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="technologyModalTitle"
+            >
+
+                <div
+                    class="technology-modal-card"
+                >
+
+                    <button
+                        class="technology-modal-close"
+                        id="technologyModalClose"
+                        type="button"
+                        aria-label="Fechar informações"
+                    >
+                        ×
+                    </button>
+
+
+                    <div
+                        class="technology-modal-content"
+                    >
+
+                        <div
+                            class="technology-modal-image"
+                        >
+
+                            <img
+                                id="modalImage"
+                                src=""
+                                alt=""
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="technology-modal-text-content"
+                        >
+
+                            <span
+                                class="technology-modal-label"
+                                id="modalLabel"
+                            >
+                                ÁREA
+                            </span>
+
+
+                            <h2
+                                class="technology-modal-title"
+                                id="technologyModalTitle"
+                            >
+                                Logística
+                            </h2>
+
+
+                            <p
+                                class="technology-modal-text"
+                                id="modalDescription"
+                            >
+                                Área da Administração relacionada ao
+                                planejamento, organização e controle do
+                                fluxo de materiais, informações e operações.
+                            </p>
+
+
+                            <div
+                                class="technology-modal-data"
+                            >
+
+                                <div
+                                    class="technology-data-box"
+                                >
+
+                                    <span>
+                                        Nível de conhecimento
+                                    </span>
+
+
+                                    <strong
+                                        id="modalLevel"
+                                    >
+                                        Em desenvolvimento
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="technology-data-box"
+                                >
+
+                                    <span>
+                                        Foco
+                                    </span>
+
+
+                                    <strong
+                                        id="modalFocus"
+                                    >
+                                        Gestão Administrativa
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+    </main>
+
+
+    <!-- ============================================================
+         JAVASCRIPT
+    ============================================================ -->
+
+    <script>
+
+        /* ============================================================
+           ELEMENTOS
+        ============================================================ */
+
+        const introScreen =
+            document.getElementById(
+                "introScreen"
+            );
+
+
+        const mainPage =
+            document.getElementById(
+                "mainPage"
+            );
+
+
+        /* ============================================================
+           CONTROLE DA INTRODUÇÃO
+        ============================================================ */
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                setTimeout(
+                    () => {
+
+                        introScreen.classList.add(
+                            "exit"
+                        );
+
+
+                        setTimeout(
+                            () => {
+
+                                introScreen.style.display =
+                                    "none";
+
+
+                                mainPage.classList.add(
+                                    "visible"
+                                );
+
+                            },
+                            850
+                        );
+
+                    },
+                    3000
+                );
+
+            }
+        );
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

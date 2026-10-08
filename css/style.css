@@ -1,0 +1,987 @@
+/* ============================================================
+   GERAL PADRONI
+   STYLE.CSS
+   Sistema visual principal
+   ============================================================ */
+
+
+/* ============================================================
+   01. RESET
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    width: 100%;
+    min-height: 100%;
+    background: #000;
+}
+
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ============================================================
+   02. INTRO
+   ============================================================ */
+
+.intro {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+/* ============================================================
+   03. BACKGROUND
+   ============================================================ */
+
+.intro-background {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        /* AZUIS */
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(0, 72, 180, 0.32) 0%,
+            rgba(0, 72, 180, 0.14) 18%,
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 42% 8%,
+            rgba(8, 124, 255, 0.25) 0%,
+            rgba(8, 124, 255, 0.10) 20%,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 78% 35%,
+            rgba(0, 190, 255, 0.18) 0%,
+            rgba(0, 190, 255, 0.07) 18%,
+            transparent 38%
+        ),
+
+        /* AMARELOS */
+
+        radial-gradient(
+            circle at 88% 12%,
+            rgba(190, 145, 0, 0.26) 0%,
+            rgba(190, 145, 0, 0.10) 18%,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 72% 55%,
+            rgba(255, 212, 0, 0.20) 0%,
+            rgba(255, 212, 0, 0.07) 20%,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 94% 78%,
+            rgba(255, 170, 0, 0.16) 0%,
+            rgba(255, 170, 0, 0.06) 18%,
+            transparent 38%
+        ),
+
+        /* VERDES */
+
+        radial-gradient(
+            circle at 10% 82%,
+            rgba(0, 105, 70, 0.28) 0%,
+            rgba(0, 105, 70, 0.10) 20%,
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 35% 92%,
+            rgba(0, 208, 132, 0.22) 0%,
+            rgba(0, 208, 132, 0.07) 18%,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 58% 76%,
+            rgba(80, 255, 120, 0.14) 0%,
+            rgba(80, 255, 120, 0.05) 16%,
+            transparent 35%
+        ),
+
+        /* CENTRO */
+
+        radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 0.025),
+            transparent 45%
+        ),
+
+        /* BASE PRETA */
+
+        #000;
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   04. COLOR ORBS
+   ============================================================ */
+
+.orb {
+    position: absolute;
+
+    width: 38vw;
+    height: 38vw;
+
+    max-width: 620px;
+    max-height: 620px;
+
+    min-width: 300px;
+    min-height: 300px;
+
+    border-radius: 50%;
+
+    filter: blur(110px);
+
+    will-change: transform;
+
+    transition:
+        opacity 0.6s ease,
+        filter 0.6s ease;
+}
+
+
+/* ============================================================
+   AZUL
+   ============================================================ */
+
+.orb-blue {
+    top: -18%;
+    left: -14%;
+
+    background:
+        radial-gradient(
+            circle,
+            #087cff 0%,
+            #0055d4 32%,
+            #003b91 58%,
+            transparent 72%
+        );
+
+    opacity: 0.34;
+}
+
+
+/* ============================================================
+   AMARELO
+   ============================================================ */
+
+.orb-yellow {
+    top: -16%;
+    right: -14%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffd400 0%,
+            #e6aa00 32%,
+            #a87800 58%,
+            transparent 72%
+        );
+
+    opacity: 0.28;
+}
+
+
+/* ============================================================
+   VERDE
+   ============================================================ */
+
+.orb-green {
+    bottom: -20%;
+    left: -12%;
+
+    background:
+        radial-gradient(
+            circle,
+            #00d084 0%,
+            #009b62 32%,
+            #006443 58%,
+            transparent 72%
+        );
+
+    opacity: 0.30;
+}
+
+
+/* ============================================================
+   BRANCO
+   ============================================================ */
+
+.orb-white {
+    right: -14%;
+    bottom: -20%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffffff 0%,
+            rgba(255, 255, 255, 0.5) 28%,
+            rgba(255, 255, 255, 0.12) 52%,
+            transparent 72%
+        );
+
+    opacity: 0.12;
+}
+
+
+/* ============================================================
+   06. CENTRAL LIGHT
+   ============================================================ */
+
+.intro-light {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 55vw;
+    height: 55vw;
+
+    max-width: 850px;
+    max-height: 850px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.055) 0%,
+            rgba(255, 255, 255, 0.018) 28%,
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   07. CONTENT
+   ============================================================ */
+
+   /* ============================================================
+      07. CONTENT
+      ============================================================ */
+
+   .intro-content {
+       position: relative;
+       z-index: 5;
+
+       width: min(900px, 90%);
+
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+
+       text-align: center;
+   }
+
+
+.intro-content.loaded {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+
+
+   /* ============================================================
+      08. TOP LINE
+      ============================================================ */
+
+      /* ============================================================
+         08. TOP LINE
+         ============================================================ */
+
+      .intro-line {
+          width: 130px;
+          height: 2px;
+
+          margin-bottom: 28px;
+
+          background:
+              linear-gradient(
+                  90deg,
+                  #087cff,
+                  #087cff
+              );
+
+          box-shadow:
+              0 0 14px rgba(8, 124, 255, 0.55),
+              0 0 28px rgba(8, 124, 255, 0.22);
+
+          transform-origin: left center;
+
+          transform: scaleX(0);
+
+          opacity: 0;
+
+          animation:
+              lineLoad 0.9s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              0.25s
+              forwards;
+      }
+
+
+      @keyframes lineLoad {
+
+          0% {
+              transform: scaleX(0);
+              opacity: 0;
+          }
+
+          20% {
+              opacity: 1;
+          }
+
+          100% {
+              transform: scaleX(1);
+              opacity: 1;
+          }
+      }
+
+
+/* ============================================================
+   09. LABEL
+   ============================================================ */
+
+   /* ============================================================
+      09. LABEL
+      ============================================================ */
+
+   .intro-label {
+       margin-bottom: 18px;
+
+       font-size: 12px;
+       font-weight: 700;
+
+       letter-spacing: 0.38em;
+
+       color: rgba(255, 255, 255, 0.58);
+
+       opacity: 0;
+
+       clip-path: inset(0 100% 0 0);
+
+       animation:
+           labelReveal 0.9s
+           cubic-bezier(0.22, 1, 0.36, 1)
+           1.15s
+           forwards;
+   }
+
+
+   @keyframes labelReveal {
+
+       0% {
+           opacity: 0;
+           clip-path: inset(0 100% 0 0);
+       }
+
+       45% {
+           opacity: 1;
+       }
+
+       100% {
+           opacity: 1;
+           clip-path: inset(0 0 0 0);
+       }
+   }
+
+
+/* ============================================================
+   10. TITLE
+   ============================================================ */
+
+   /* ============================================================
+      10. TITLE
+      ============================================================ */
+
+   .intro-content h1 {
+       display: flex;
+       flex-direction: column;
+
+       margin-bottom: 25px;
+
+       line-height: 0.9;
+
+       font-size: clamp(4rem, 10vw, 9rem);
+
+       font-weight: 900;
+
+       letter-spacing: -0.06em;
+
+       overflow: hidden;
+   }
+
+
+   /* ============================================================
+      GENERAL
+      ============================================================ */
+
+   .title-general {
+       color: #fff;
+
+       opacity: 0;
+
+       transform: translateX(120%);
+
+       animation:
+           generalEnter 1s
+           cubic-bezier(0.16, 1, 0.3, 1)
+           1.85s
+           forwards;
+
+       text-shadow:
+           0 0 35px rgba(255, 255, 255, 0.08);
+   }
+
+
+   @keyframes generalEnter {
+
+       0% {
+           opacity: 0;
+           transform: translateX(120%);
+       }
+
+       65% {
+           opacity: 1;
+       }
+
+       100% {
+           opacity: 1;
+           transform: translateX(0);
+       }
+   }
+
+
+   /* ============================================================
+      PADRONI
+      ============================================================ */
+
+   .title-padroni {
+       background:
+           linear-gradient(
+               90deg,
+               #087cff,
+               #00d084,
+               #ffd400,
+               #ffffff
+           );
+
+       background-size: 250% 100%;
+
+       -webkit-background-clip: text;
+       background-clip: text;
+
+       -webkit-text-fill-color: transparent;
+
+       opacity: 0;
+
+       transform: translateX(-120%);
+
+       animation:
+           padroniEnter 1s
+           cubic-bezier(0.16, 1, 0.3, 1)
+           2.15s
+           forwards,
+
+           titleGradient 7s
+           ease-in-out
+           3.15s
+           infinite;
+   }
+
+
+   @keyframes padroniEnter {
+
+       0% {
+           opacity: 0;
+           transform: translateX(-120%);
+       }
+
+       65% {
+           opacity: 1;
+       }
+
+       100% {
+           opacity: 1;
+           transform: translateX(0);
+       }
+   }
+
+
+   @keyframes titleGradient {
+
+       0% {
+           background-position: 0% 50%;
+       }
+
+       50% {
+           background-position: 100% 50%;
+       }
+
+       100% {
+           background-position: 0% 50%;
+       }
+   }
+
+
+/* ============================================================
+   11. DESCRIPTION
+   ============================================================ */
+
+   /* ============================================================
+      11. DESCRIPTION
+      ============================================================ */
+
+   .intro-description {
+       max-width: 650px;
+
+       margin-bottom: 42px;
+
+       font-size: clamp(15px, 1.5vw, 19px);
+
+       line-height: 1.7;
+
+       color: rgba(255, 255, 255, 0.68);
+
+       font-weight: 400;
+
+       opacity: 0;
+
+       transform: translateY(18px);
+
+       animation:
+           descriptionEnter 0.9s
+           cubic-bezier(0.22, 1, 0.36, 1)
+           3.35s
+           forwards;
+   }
+
+
+   @keyframes descriptionEnter {
+
+       0% {
+           opacity: 0;
+           transform: translateY(18px);
+       }
+
+       100% {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+
+/* ============================================================
+   12. ACCESS BUTTON
+   ============================================================ */
+
+.access-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    height: 58px;
+
+    padding: 0 38px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8, 124, 255, 0.16),
+            rgba(0, 208, 132, 0.12),
+            rgba(255, 212, 0, 0.10)
+        );
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.3em;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+
+        opacity: 0;
+
+        transform: scale(0.15);
+
+        animation:
+            buttonEnter 0.9s
+            cubic-bezier(0.16, 1, 0.3, 1)
+            4.05s
+            forwards;
+
+}
+
+@keyframes buttonEnter {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.15);
+    }
+
+    55% {
+        opacity: 1;
+        transform: scale(1.06);
+    }
+
+    75% {
+        transform: scale(0.97);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* ============================================================
+   BRILHO QUE ATRAVESSA O BOTÃO
+   ============================================================ */
+
+.access-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    transform: skewX(-25deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.55),
+            rgba(255, 255, 255, 0.08),
+            transparent
+        );
+
+    transition:
+        left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   BORDA COLORIDA
+   ============================================================ */
+
+.access-button::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border: 1px solid transparent;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #087cff,
+            #00d084,
+            #ffd400,
+            #fff
+        ) border-box;
+
+        mask:
+            linear-gradient(#fff 0 0) padding-box,
+            linear-gradient(#fff 0 0);
+
+        mask-composite: exclude;
+
+
+
+    opacity: 0;
+
+    transition:
+        opacity 0.35s ease;
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   TEXTO
+   ============================================================ */
+
+.access-button span {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* ============================================================
+   HOVER
+   ============================================================ */
+
+.access-button:hover {
+
+    transform: translateY(-4px);
+
+    border-color: rgba(255, 255, 255, 0.75);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8, 124, 255, 0.28),
+            rgba(0, 208, 132, 0.20),
+            rgba(255, 212, 0, 0.16)
+        );
+
+    box-shadow:
+        0 0 18px rgba(8, 124, 255, 0.25),
+        0 0 35px rgba(0, 208, 132, 0.15),
+        0 0 55px rgba(255, 212, 0, 0.08);
+}
+
+
+.access-button:hover::before {
+    left: 140%;
+}
+
+
+.access-button:hover::after {
+    opacity: 1;
+}
+
+
+/* ============================================================
+   CLICK
+   ============================================================ */
+
+.access-button:active {
+
+    transform: translateY(-1px) scale(0.97);
+
+    box-shadow:
+        0 0 12px rgba(8, 124, 255, 0.2);
+}
+
+
+.access-button.clicked {
+    transform: scale(0.96);
+}
+
+/* ============================================================
+   13. INDICATORS
+   ============================================================ */
+
+.intro-indicators {
+    position: absolute;
+
+    z-index: 5;
+
+    bottom: 34px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.indicator {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    opacity: 0.75;
+
+    box-shadow:
+        0 0 12px currentColor;
+}
+
+
+.indicator-blue {
+    background: #087cff;
+    color: #087cff;
+}
+
+
+.indicator-yellow {
+    background: #ffd400;
+    color: #ffd400;
+}
+
+
+.indicator-green {
+    background: #00d084;
+    color: #00d084;
+}
+
+
+.indicator-white {
+    background: #fff;
+    color: #fff;
+}
+
+
+/* ============================================================
+   14. RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    .orb {
+        width: 60vw;
+        height: 60vw;
+
+        filter: blur(80px);
+    }
+
+
+    .intro-label {
+        font-size: 9px;
+
+        letter-spacing: 0.28em;
+    }
+
+
+    .intro-content h1 {
+        font-size: clamp(3.3rem, 16vw, 6rem);
+    }
+
+
+    .intro-description {
+        width: 90%;
+
+        font-size: 14px;
+    }
+
+
+    .access-button {
+        min-width: 170px;
+        height: 54px;
+    }
+
+
+    .intro-indicators {
+        bottom: 24px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .intro-line {
+        width: 90px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .intro-label {
+        font-size: 8px;
+    }
+
+
+    .intro-content h1 {
+        font-size: clamp(2.8rem, 17vw, 5rem);
+    }
+
+
+    .intro-description {
+        margin-bottom: 34px;
+
+        font-size: 13px;
+    }
+
+
+    .access-button {
+        min-width: 155px;
+        height: 50px;
+
+        padding: 0 28px;
+
+        font-size: 10px;
+    }
+}
+
+
+/* ============================================================
+   15. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
